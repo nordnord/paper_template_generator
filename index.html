@@ -17,11 +17,14 @@
                 <span>Pattern</span>
                 <div class="button pattern_btn" id="line">Line</div>
                 <div class="button pattern_btn" id="graph">Graph</div>
-                <div class="button pattern_btn" id="dots">Dots</div>
+                <div class="button pattern_btn active" id="dots">Dots</div>
                 <div class="button pattern_btn" id="cross">Cross</div>
 
-                <span>Pattern dimension:</span>
-                <input type="range" min="0" max="50" class="slider" id="ctrl_pattern_dim" oninput="changePatternDim()">
+                <div>
+                    <span>Pattern dimension:</span>
+                    <input type="range" min="5" max="100" value="10" class="slider" id="ctrl_pattern_dim" oninput="changePatternDim()">
+
+                </div>
             </div>
 
             <div class="control_group" style="flex-direction:column; align-items: flex-start;" id="ctrlG_margin">
@@ -88,9 +91,9 @@
             <div id="grid">
                 <!-- Dot grid -->
                 <svg id="grid_svg" width="595" height="842" currentscale="2">
-                    <pattern id="grid_svg_dots" patternUnits="userSpaceOnUse" x="0" y="0" width="25" height="25">
+                    <pattern id="grid_svg_dots" patternUnits="userSpaceOnUse" x="0" y="0" width="10" height="10">
                         <g id="dot_g">
-                            <circle class="svgdot" cx="0.5" cy="0.5" r="1" stroke="var(--grid_color)"></circle>
+                            <circle class="svgdot" cx="5" cy="5" r="1" stroke="var(--grid_color)"></circle>
                         </g>
                     </pattern>
 
@@ -107,10 +110,11 @@
                         </g>
                     </pattern>
 
-                    <pattern id="grid_svg_graph" patternUnits="userSpaceOnUse" x="-1" y="-1" width="25" height="25">
+                    <pattern id="grid_svg_graph" patternUnits="userSpaceOnUse" x="-1" y="-1" width="150" height="150">
                         <g id="line_g">
                             <line x1="0" x2="500" y1="0" y2="0" stroke="var(--grid_color)" stroke-width="2"></line>
                             <line x1="0" x2="0" y1="0" y2="500" stroke="var(--grid_color)" stroke-width="2"></line>
+
                         </g>
                     </pattern>
 
@@ -125,9 +129,13 @@
     <script>
         const a4_width = 595;
         const a4_height = 842;
+        const a4_area = a4_height * a4_width;
 
         let config = {
-            "grid": "dots",
+            "grid":{
+                "type": "dots",
+                "dim": 25
+            } ,
             "margin":{
                 "uniform": true,
                 "margin": "50"
@@ -147,14 +155,18 @@
         // Change pattern
         $(".pattern_btn").click(function(){
             $("#grid_svg-grid").attr("fill", "url(#grid_svg_" + this.id + ")");
-            config["grid"] = this.id;
+            config["grid"]['type'] = this.id;
+            $(".pattern_btn").removeClass("active");
+            $(this).addClass("active");
         });
 
         function changePatternDim(){
             let dim = $("#ctrl_pattern_dim")[0].value;
-            console.log(config['grid'], dim, $("#grid_svg_" + config['grid']))
-            $("#grid_svg_" + config['grid']).attr("height", dim);
-            $("#grid_svg_" + config['grid']).attr("width", dim);
+            config['grid']['dim'] = dim;
+            // dim = Math.sqrt((a4_area-4) / dim);
+            // console.log(dim);
+            $("#grid_svg_" + config['grid']['type']).attr("height", dim);
+            $("#grid_svg_" + config['grid']['type']).attr("width", dim);
         }
 
         function changeMargin(type){
