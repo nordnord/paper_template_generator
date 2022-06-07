@@ -14,27 +14,27 @@
                 
                 <div id="ctrlG_margin_uniform">
                     <span>Margin:</span>
-                    <input type="range" min="0" max="50" class="slider" id="ctrl_margin" onchange="changeMargin('u')">
+                    <input type="range" min="0" max="50" class="slider" id="ctrl_margin" oninput="changeMargin('u')">
                     <span id="out_margin_u"></span>
                 </div>
                 <div id="ctrlG_margin_l" style="display: none;">
                     <span>Left:</span>
-                    <input type="range" min="0" max="50" class="slider" id="ctrl_margin_l" onchange="changeMargin('l')">
+                    <input type="range" min="0" max="50" class="slider" id="ctrl_margin_l" oninput="changeMargin('l')">
                     <span id="out_margin_l"></span>
                 </div>
                 <div id="ctrlG_margin_r" style="display: none;">
                     <span>Right:</span>
-                    <input type="range" min="0" max="50" class="slider" id="ctrl_margin_r" onchange="changeMargin('r')">
+                    <input type="range" min="0" max="50" class="slider" id="ctrl_margin_r" oninput="changeMargin('r')">
                     <span id="out_margin_r"></span>
                 </div>
                 <div id="ctrlG_margin_t" style="display: none;">
                     <span>Top:</span>
-                    <input type="range" min="0" max="50" class="slider" id="ctrl_margin_t" onchange="changeMargin('t')">
+                    <input type="range" min="0" max="50" class="slider" id="ctrl_margin_t" oninput="changeMargin('t')">
                     <span id="out_margin_t"></span>
                 </div>
                 <div id="ctrlG_margin_b" style="display: none;">
                     <span>Bottom:</span>
-                    <input type="range" min="0" max="50" class="slider" id="ctrl_margin_b" onchange="changeMargin('b')">
+                    <input type="range" min="0" max="50" class="slider" id="ctrl_margin_b" oninput="changeMargin('b')">
                     <span id="out_margin_b"></span>
                 </div>
             </div>
@@ -52,12 +52,12 @@
                 <div>
                     <span>Left:</span>
                     <input type="checkbox" id="ctrl_guide_l" onchange="toggleMarginLine('l')">
-                    <input type="range" min="0" max="50" id="ctrl_guide_perc_l" onchange="moveMarginLine('l')">
+                    <input type="range" min="0" max="50" id="ctrl_guide_perc_l" oninput="moveMarginLine('l')">
                 </div>
                 <div>
                     <span>Right:</span>
                     <input type="checkbox" id="ctrl_guide_r" onchange="toggleMarginLine('r')">
-                    <input type="range" min="50" max="100" id="ctrl_guide_perc_r" onchange="moveMarginLine('r')">
+                    <input type="range" min="50" max="100" id="ctrl_guide_perc_r" oninput="moveMarginLine('r')">
                 </div>
 
             </div>
@@ -69,7 +69,7 @@
                 <svg id="grid_svg" width="595" height="842" currentscale="2">
                     <pattern id="grid_svg_pat" patternUnits="userSpaceOnUse" x="0" y="100" width="22.47" height="22.47">
                         <g id="sharp">
-                            <circle class="svgdot" cx="0.5" cy="0.5" r="0.5" stroke="#acacac" style="fill: none;"></circle>
+                            <circle class="svgdot" cx="0.5" cy="0.5" r="1" style="fill: #acacac";"></circle>
                         </g>
                     </pattern>
                     <rect id="grid_svg-grid" fill="url(#grid_svg_pat)" width="595" height="842"></rect>
@@ -172,8 +172,11 @@
         }
 
         function changeGridColor(){
-            // TODO
-            config["grid_color"] = "";
+            let color = document.getElementById("ctrl_grid_color").value;
+            let dot = document.getElementsByClassName("svgdot")[0];
+            console.log(dot)
+            dot.style.fill = color;
+            config["grid_color"] = color;
         }
 
         function toggleMarginLine(type){
