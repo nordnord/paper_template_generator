@@ -1,6 +1,12 @@
 <html>
     <head>
         <link href="style.css" rel="stylesheet">
+        <style>
+        :root{
+            --accent_color: #C16069;
+            --grid_color: #acacac;
+        }
+        </style>
     </head>
     <body>
         <div class="panel">
@@ -45,6 +51,8 @@
                 <input id="ctrl_bg_color" type="color" onchange="changePaperColor()">
                 <span>Grid color:</span>
                 <input id="ctrl_grid_color" type="color" onchange="changeGridColor()">
+                <span>Accent color:</span>
+                <input id="ctrl_aux_color" type="color" onchange="changeAccentColor()">
             </div>
 
             <div class="control_group" style="flex-direction: column;">
@@ -69,12 +77,12 @@
                 <svg id="grid_svg" width="595" height="842" currentscale="2">
                     <pattern id="grid_svg_pat" patternUnits="userSpaceOnUse" x="0" y="100" width="22.47" height="22.47">
                         <g id="sharp">
-                            <circle class="svgdot" cx="0.5" cy="0.5" r="1" style="fill: #acacac";"></circle>
+                            <circle class="svgdot" cx="0.5" cy="0.5" r="1" stroke="var(--grid_color)"></circle>
                         </g>
                     </pattern>
                     <rect id="grid_svg-grid" fill="url(#grid_svg_pat)" width="595" height="842"></rect>
-                    <line id="grid_svg_guide_l" x1="100" x2="100" y1="0" y2="842" stroke="red" style="display:none"></line>
-                    <line id="grid_svg_guide_r" x1="476" x2="476" y1="0" y2="842" stroke="red" style="display:none"></line>
+                    <line id="grid_svg_guide_l" x1="100" x2="100" y1="0" y2="842" stroke="var(--accent_color)" style="display:none;"></line>
+                    <line id="grid_svg_guide_r" x1="476" x2="476" y1="0" y2="842" stroke="var(--accent_color)" style="display:none;"></line>
                 </svg>
             </div>
         </div>
@@ -173,10 +181,14 @@
 
         function changeGridColor(){
             let color = document.getElementById("ctrl_grid_color").value;
-            let dot = document.getElementsByClassName("svgdot")[0];
-            console.log(dot)
-            dot.style.fill = color;
+            document.querySelector(":root").style.setProperty('--grid_color', color);
             config["grid_color"] = color;
+        }
+
+        function changeAccentColor(){
+            let color = document.getElementById("ctrl_aux_color").value;
+            document.querySelector(":root").style.setProperty('--accent_color', color);
+            config['aux_color'] = color;
         }
 
         function toggleMarginLine(type){
