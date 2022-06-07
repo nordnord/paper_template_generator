@@ -14,47 +14,49 @@
         <div class="panel">
             <h1>Hello world!</h1>
             <div class="control_group">
-                <span>Pattern</span>
-                <div class="button pattern_btn" id="line">Line</div>
-                <div class="button pattern_btn" id="graph">Graph</div>
-                <div class="button pattern_btn active" id="dots">Dots</div>
-                <div class="button pattern_btn" id="cross">Cross</div>
+                <span class="cg_header">Pattern</span>
+                <div class="flex-h">
+                    <div class="button pattern_btn" id="line">Line</div>
+                    <div class="button pattern_btn" id="graph">Graph</div>
+                    <div class="button pattern_btn active" id="dots">Dots</div>
+                    <div class="button pattern_btn" id="cross">Cross</div>
+                </div>
+                
 
-                <div>
+                <div class="flex-h">
                     <span>Pattern dimension:</span>
                     <input type="range" min="5" max="100" value="10" class="slider" id="ctrl_pattern_dim" oninput="changePatternDim()">
-
                 </div>
             </div>
 
-            <div class="control_group" style="flex-direction:column; align-items: flex-start;" id="ctrlG_margin">
-                <span>Margin</span>
+            <div class="control_group" style="flex-direction:column; align-items: flex-start;" id="ctrl_g_margin">
+                <span class="cg_header">Margin</span>
                 <div>
-                    <input type="checkbox" id="ctrl_margin_uniform" checked="" onchange="ctrlChangeMarginType()">
+                    <input type="checkbox" id="ctrl_margin_uniform" checked="checked" onchange="ctrlChangeMarginType()">
                     <span>Uniform margin</span>
                 </div>
                 
-                <div id="ctrlG_margin_uniform">
+                <div class="flex-h" id="ctrlG_margin">
                     <span>Margin:</span>
                     <input type="range" min="0" max="50" class="slider" id="ctrl_margin" oninput="changeMargin('u')">
                     <span id="out_margin_u"></span>
                 </div>
-                <div id="ctrlG_margin_l" style="display: none;">
+                <div class="flex-h" id="ctrlG_margin_l" style="display: none;">
                     <span>Left:</span>
                     <input type="range" min="0" max="50" class="slider" id="ctrl_margin_l" oninput="changeMargin('l')">
                     <span id="out_margin_l"></span>
                 </div>
-                <div id="ctrlG_margin_r" style="display: none;">
+                <div class="flex-h" id="ctrlG_margin_r" style="display: none;">
                     <span>Right:</span>
                     <input type="range" min="0" max="50" class="slider" id="ctrl_margin_r" oninput="changeMargin('r')">
                     <span id="out_margin_r"></span>
                 </div>
-                <div id="ctrlG_margin_t" style="display: none;">
+                <div class="flex-h" id="ctrlG_margin_t" style="display: none;">
                     <span>Top:</span>
                     <input type="range" min="0" max="50" class="slider" id="ctrl_margin_t" oninput="changeMargin('t')">
                     <span id="out_margin_t"></span>
                 </div>
-                <div id="ctrlG_margin_b" style="display: none;">
+                <div class="flex-h" id="ctrlG_margin_b" style="display: none;">
                     <span>Bottom:</span>
                     <input type="range" min="0" max="50" class="slider" id="ctrl_margin_b" oninput="changeMargin('b')">
                     <span id="out_margin_b"></span>
@@ -62,25 +64,33 @@
             </div>
 
             <div class="control_group">
-                <span>Color</span>
-                <span>Paper color:</span>
-                <input id="ctrl_bg_color" type="color" onchange="changePaperColor()">
-                <span>Grid color:</span>
-                <input id="ctrl_grid_color" type="color" onchange="changeGridColor()">
-                <span>Accent color:</span>
-                <input id="ctrl_aux_color" type="color" onchange="changeAccentColor()">
+                <span class="cg_header">Color</span>
+                <div class="flex-h">
+                    <span>Paper color:</span>
+                    <input id="ctrl_bg_color" type="color" onchange="changePaperColor()">
+                </div>
+                <div class="flex-h">
+                    <span>Grid color:</span>
+                    <input id="ctrl_grid_color" type="color" onchange="changeGridColor()">
+                </div>
+
+                <div class="flex-h">
+                    <span>Accent color:</span>
+                    <input id="ctrl_aux_color" type="color" onchange="changeAccentColor()">
+                </div>
+
             </div>
 
             <div class="control_group" style="flex-direction: column;">
-                <span>Guides</span>
-                <div>
-                    <span>Left:</span>
+                <span class="cg_header">Guides</span>
+                <div class="flex-h">
                     <input type="checkbox" id="ctrl_guide_l" onchange="toggleMarginLine('l')">
+                    <span>Left:</span>
                     <input type="range" min="0" max="50" id="ctrl_guide_perc_l" oninput="moveMarginLine('l')">
                 </div>
-                <div>
-                    <span>Right:</span>
+                <div class="flex-h">
                     <input type="checkbox" id="ctrl_guide_r" onchange="toggleMarginLine('r')">
+                    <span>Right:</span>
                     <input type="range" min="50" max="100" id="ctrl_guide_perc_r" oninput="moveMarginLine('r')">
                 </div>
 
@@ -97,7 +107,7 @@
                         </g>
                     </pattern>
 
-                    <pattern id="grid_svg_cross" patternUnits="userSpaceOnUse" x="0" y="0" width="25" height="25">
+                    <pattern id="grid_svg_cross" patternUnits="userSpaceOnUse" x="10" y="10" width="25" height="25">
                         <g id="cross_g">
                             <line x1="0" x2="6" y1="3" y2="3" stroke="var(--grid_color)" stroke-width="1"></line>
                             <line x1="3" x2="3" y1="0" y2="6" stroke="var(--grid_color)" stroke-width="1"></line>
@@ -224,11 +234,12 @@
 
         function ctrlChangeMarginType(){
             let uniformMarginCheckbox = document.getElementById("ctrl_margin_uniform").checked;
-            document.getElementById("ctrlG_margin_uniform").style.display = uniformMarginCheckbox ? "initial" : "none";
-            document.getElementById("ctrlG_margin_l").style.display = uniformMarginCheckbox ? "none" : "initial";
-            document.getElementById("ctrlG_margin_r").style.display = uniformMarginCheckbox ? "none" : "initial";
-            document.getElementById("ctrlG_margin_t").style.display = uniformMarginCheckbox ? "none" : "initial";
-            document.getElementById("ctrlG_margin_b").style.display = uniformMarginCheckbox ? "none" : "initial";
+            document.getElementById("ctrlG_margin").style.display = uniformMarginCheckbox ? "flex" : "none";
+            $("div[id^='ctrlG_margin_']").css('display', uniformMarginCheckbox ? "none" : "flex");
+            // document.getElementById("ctrlG_margin_l").style.display = uniformMarginCheckbox ? "none" : "initial";
+            // document.getElementById("ctrlG_margin_r").style.display = uniformMarginCheckbox ? "none" : "initial";
+            // document.getElementById("ctrlG_margin_t").style.display = uniformMarginCheckbox ? "none" : "initial";
+            // document.getElementById("ctrlG_margin_b").style.display = uniformMarginCheckbox ? "none" : "initial";
 
         }
 

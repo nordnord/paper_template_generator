@@ -40,15 +40,24 @@ body{
 
 .control_group{
     display: flex;
+    flex-direction: column;
 
-    border: 1px solid #acacac;
+    border: 1px solid #dedede;
     border-radius: 2px;
     box-shadow: 0 0 5px 5px rgba(200, 200, 200, 0.1);
 
-    padding: 0.3rem;
+    padding: 0.66rem;
     align-items: center;
     flex-grow: 0;
     justify-content: space-between;
+    gap: 0.33rem;
+}
+
+.cg_header{
+    align-self: flex-start;
+    color: var(--accent_color);
+    font-weight: bold;
+    font-size: 1.3rem;
 }
 
 .button{
@@ -56,16 +65,24 @@ body{
     height: 50px;
     border: 1px solid #acacac;
     border-radius: 2px;
+    padding: 0.25rem;
 
     box-shadow: 0 0 5px 5px rgba(200, 200, 200, 0.1);
 }
 
 .button:hover{
     box-shadow: 0 0 5px 5px rgba(200, 200, 200, 0.3);
-
 }
 
 .button.active{
     background-color: var(--accent_color);
     color: white;
+}
+
+.flex-h{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: space-between;
+    width: 100%;
 }
