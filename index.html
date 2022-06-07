@@ -6,20 +6,68 @@
             --accent_color: #C16069;
             --grid_color: #acacac;
             --pattern_dim: 25;
+            --button_color: black;
         }
         </style>
         <script src="jquery-3.6.0.min.js"></script>
     </head>
     <body>
         <div class="panel">
-            <h1>Hello world!</h1>
+            <h1 style="margin-top: 0; font-size: 1.75rem;">Paper Template Generator</h1>
+            <div class="control_group">
+                <span class="cg_header">Result</span>
+                <div class="flex-h" style="justify-content: flex-start;">
+                    <div class="button active">
+                        <embed src="icon_pdf.svg" width="100%" height="70%">
+                        </embed>
+                            PDF
+                    </div>
+                    <div class="button" onclick="exportConfig()">
+                        <span>Export config</span>
+                    </div>
+                </div>
+            </div>
             <div class="control_group">
                 <span class="cg_header">Pattern</span>
                 <div class="flex-h">
-                    <div class="button pattern_btn" id="line">Line</div>
-                    <div class="button pattern_btn" id="graph">Graph</div>
-                    <div class="button pattern_btn active" id="dots">Dots</div>
-                    <div class="button pattern_btn" id="cross">Cross</div>
+                    <div class="button pattern_btn" id="line">
+                        <svg width="100%" height="70%" stroke="black">
+                            <line x1="0" x2="150" y1="10" y2="10"></line>
+                            <line x1="0" x2="150" y1="30" y2="30"></line>
+                        </svg>
+                        <span>Line</span>
+                    </div>
+                    
+                    <div class="button pattern_btn" id="graph">
+                        <svg width="100%" height="70%" stroke="black">
+                                <line x1="0" x2="150" y1="10" y2="10"></line>
+                                <line x1="0" x2="150" y1="30" y2="30"></line>
+                                <line x1="20" x2="20" y1="0" y2="40"></line>
+                                <line x1="45" x2="45" y1="0" y2="40"></line>
+                        </svg>
+                        <span>Graph</span>
+                    </div>
+
+                    <div class="button pattern_btn active" id="dots">
+                        <svg width="100%" height="70%" stroke="black">
+                            <g>
+                                <circle cx="25" cy="15" r="2"></circle>
+                                <circle cx="25" cy="30" r="2"></circle>
+                                <circle cx="40" cy="15" r="2"></circle>
+                                <circle cx="40" cy="30" r="2"></circle>
+                            </g>
+                        </svg>
+                        <span>Dots</span>
+                    </div>
+                    <div class="button pattern_btn" id="cross">
+                        <svg width="100%" height="70%" stroke="black">
+                            <g>
+                                <line x1="15" x2="50" y1="25" y2="25"></line>
+                                <line x1="32" x2="32" y1="10" y2="40"></line>
+                            </g>
+                        </svg>
+                        <span>Cross</span>
+                    </div>
                 </div>
                 
 
@@ -168,6 +216,7 @@
             config["grid"]['type'] = this.id;
             $(".pattern_btn").removeClass("active");
             $(this).addClass("active");
+            $(":root")[0].style.setProperty("--button_color", "white")
         });
 
         function changePatternDim(){
@@ -277,7 +326,24 @@
             config["guides"][type]["width"] = a4_width * (width/100);
         }
 
+        function exportConfig(){
+            $("#modal-wrap")[0].style.display = "block";
+            $("#config")[0].value = JSON.stringify(config, null, 4);
+        }
+
+        function closeModal(){
+            $("#modal-wrap")[0].style.display = "none";
+        }
+
     </script>
+
+    <div id="modal-wrap">
+        <div id="modal">
+            <span class="cg_header">Config</span>
+            <div onclick="closeModal()" style="cursor:pointer; position: absolute; top:5%; right:5%; font-weight: bold;">X</div>
+            <textarea id="config" disabled="true"></textarea>
+        </div>
+    </div>
         
     </body>
 </html>
