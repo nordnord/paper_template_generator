@@ -75,12 +75,19 @@
             <div id="grid">
                 <!-- Dot grid -->
                 <svg id="grid_svg" width="595" height="842" currentscale="2">
-                    <pattern id="grid_svg_pat" patternUnits="userSpaceOnUse" x="0" y="100" width="22.47" height="22.47">
+                    <pattern id="grid_svg_dot" patternUnits="userSpaceOnUse" x="0" y="100" width="22.47" height="22.47">
                         <g id="sharp">
                             <circle class="svgdot" cx="0.5" cy="0.5" r="1" stroke="var(--grid_color)"></circle>
                         </g>
                     </pattern>
-                    <rect id="grid_svg-grid" fill="url(#grid_svg_pat)" width="595" height="842"></rect>
+                    <pattern id="grid_svg_cross" patternUnits="userSpaceOnUse" x="0" y="100" width="22.47" height="22.47">
+                        <g id="cross_g">
+                            <line x1="0" x2="10" y1="5" y2="5" stroke="var(--grid_color)" stroke-width="2"></line>
+                            <line x1="5" x2="5" y1="0" y2="10" stroke="var(--grid_color)" stroke-width="2"></line>
+                        </g>
+                    </pattern>
+                    <!-- <rect id="grid_svg-grid" fill="url(#grid_svg_dot)" width="595" height="842"></rect> -->
+                    <rect id="grid_svg-grid" fill="url(#grid_svg_cross)" width="595" height="842"></rect>
                     <line id="grid_svg_guide_l" x1="100" x2="100" y1="0" y2="842" stroke="var(--accent_color)" style="display:none;"></line>
                     <line id="grid_svg_guide_r" x1="476" x2="476" y1="0" y2="842" stroke="var(--accent_color)" style="display:none;"></line>
                 </svg>
