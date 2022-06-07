@@ -7,10 +7,19 @@
             --grid_color: #acacac;
         }
         </style>
+        <script src="jquery-3.6.0.min.js"></script>
     </head>
     <body>
         <div class="panel">
             <h1>Hello world!</h1>
+            <div class="control_group">
+                <span>Pattern</span>
+                <div class="button pattern_btn" id="line">Line</div>
+                <div class="button pattern_btn" id="graph">Graph</div>
+                <div class="button pattern_btn" id="dot">Dots</div>
+                <div class="button pattern_btn" id="cross">Cross</div>
+            </div>
+
             <div class="control_group" style="flex-direction:column; align-items: flex-start;" id="ctrlG_margin">
                 <span>Margin</span>
                 <div>
@@ -80,20 +89,28 @@
                             <circle class="svgdot" cx="0.5" cy="0.5" r="1" stroke="var(--grid_color)"></circle>
                         </g>
                     </pattern>
+
                     <pattern id="grid_svg_cross" patternUnits="userSpaceOnUse" x="0" y="100" width="22.47" height="22.47">
                         <g id="cross_g">
                             <line x1="0" x2="10" y1="5" y2="5" stroke="var(--grid_color)" stroke-width="2"></line>
                             <line x1="5" x2="5" y1="0" y2="10" stroke="var(--grid_color)" stroke-width="2"></line>
                         </g>
                     </pattern>
+
                     <pattern id="grid_svg_line" patternUnits="userSpaceOnUse" x="0" y="100" width="22.47" height="22.47">
                         <g id="line_g">
                             <line x1="0" x2="100" y1="0" y2="0" stroke="var(--grid_color)" stroke-width="2"></line>
                         </g>
                     </pattern>
-                    <!-- <rect id="grid_svg-grid" fill="url(#grid_svg_dot)" width="595" height="842"></rect> -->
-                    <!-- <rect id="grid_svg-grid" fill="url(#grid_svg_cross)" width="595" height="842"></rect> -->
-                    <rect id="grid_svg-grid" fill="url(#grid_svg_line)" width="595" height="842"></rect>
+
+                    <pattern id="grid_svg_graph" patternUnits="userSpaceOnUse" x="-1" y="-1" width="17.5" height="17.5">
+                        <g id="line_g">
+                            <line x1="0" x2="35" y1="0" y2="0" stroke="var(--grid_color)" stroke-width="2"></line>
+                            <line x1="0" x2="0" y1="0" y2="35" stroke="var(--grid_color)" stroke-width="2"></line>
+                        </g>
+                    </pattern>
+
+                    <rect id="grid_svg-grid" fill="url(#grid_svg_graph)" width="595" height="842"></rect>
 
                     <line id="grid_svg_guide_l" x1="100" x2="100" y1="0" y2="842" stroke="var(--accent_color)" style="display:none;"></line>
                     <line id="grid_svg_guide_r" x1="476" x2="476" y1="0" y2="842" stroke="var(--accent_color)" style="display:none;"></line>
@@ -122,6 +139,10 @@
                 }
             }
         }
+
+        $(".pattern_btn").click(function(){
+            $("#grid_svg-grid").attr("fill", "url(#grid_svg_" + this.id + ")");
+        });
 
         function changeMargin(type){
             let paper = document.getElementById("paper");
