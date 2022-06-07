@@ -5,9 +5,63 @@
     <body>
         <div class="panel">
             <h1>Hello world!</h1>
-            <span>Margin:</span>
-            <input type="range" min="0" max="100" class="slider" id="ctrl_margin" onchange="changeMargin()">
-            <span id="out_margin"></span>
+            <div class="control_group" style="flex-direction:column; align-items: flex-start;" id="ctrlG_margin">
+                <span>Margin</span>
+                <div>
+                    <input type="checkbox" id="ctrl_margin_uniform" checked="" onchange="ctrlChangeMarginType()">
+                    <span>Uniform margin</span>
+                </div>
+                
+                <div id="ctrlG_margin_uniform">
+                    <span>Margin:</span>
+                    <input type="range" min="0" max="100" class="slider" id="ctrl_margin" onchange="changeMargin('u')">
+                    <span id="out_margin_u"></span>
+                </div>
+                <div id="ctrlG_margin_l" style="display: none;">
+                    <span>Left:</span>
+                    <input type="range" min="0" max="100" class="slider" id="ctrl_margin_l" onchange="changeMargin('l')">
+                    <span id="out_margin_l"></span>
+                </div>
+                <div id="ctrlG_margin_r" style="display: none;">
+                    <span>Right:</span>
+                    <input type="range" min="0" max="100" class="slider" id="ctrl_margin_r" onchange="changeMargin('r')">
+                    <span id="out_margin_r"></span>
+                </div>
+                <div id="ctrlG_margin_t" style="display: none;">
+                    <span>Top:</span>
+                    <input type="range" min="0" max="100" class="slider" id="ctrl_margin_t" onchange="changeMargin('t')">
+                    <span id="out_margin_t"></span>
+                </div>
+                <div id="ctrlG_margin_b" style="display: none;">
+                    <span>Bottom:</span>
+                    <input type="range" min="0" max="100" class="slider" id="ctrl_margin_b" onchange="changeMargin('b')">
+                    <span id="out_margin_b"></span>
+                </div>
+            </div>
+
+            <div class="control_group">
+                <span>Color</span>
+                <span>Paper color:</span>
+                <input id="ctrl_bg_color" type="color" onchange="changePaperColor()">
+                <span>Grid color:</span>
+                <input id="ctrl_grid_color" type="color" onchange="changeGridColor()">
+            </div>
+
+            <div class="control_group" style="flex-direction: column;">
+                <span>Guides</span>
+                <div>
+                    <span>Left:</span>
+                    <input type="checkbox" id="ctrl_guide_l" onchange="toggleMarginLine('l')">
+                    <input type="range" min="0" max="50" id="ctrl_guide_perc_l" onchange="moveMarginLine('l')">
+                </div>
+                <div>
+                    <span>Right:</span>
+                    <input type="checkbox" id="ctrl_guide_r" onchange="toggleMarginLine('r')">
+                    <input type="range" min="50" max="100" id="ctrl_guide_perc_r" onchange="moveMarginLine('r')">
+                </div>
+
+            </div>
+            
         </div>
         <div id="paper">
             <div id="grid">
@@ -19,25 +73,108 @@
                         </g>
                     </pattern>
                     <rect id="grid_svg-grid" fill="url(#grid_svg_pat)" width="595" height="842"></rect>
+                    <line id="grid_svg_guide_l" x1="100" x2="100" y1="0" y2="842" stroke="red" style="display:none"></line>
+                    <line id="grid_svg_guide_r" x1="476" x2="476" y1="0" y2="842" stroke="red" style="display:none"></line>
                 </svg>
             </div>
         </div>
 
     <script>
-        function changeMargin(){
-            let margin = document.getElementById("ctrl_margin").value;
+        let config = {
+            "grid": "dot",
+            "margin":{
+                "uniform": true,
+                "margin": "50"
+            },
+            "bg_color": "white",
+            "grid_color": "#acacac",
+            "guides":{
+                "l": {
+                    "enabled": false
+                },
+                "r": {
+                    "enabled": false
+                }
+            }
+        }
+
+        function changeMargin(type){
             let paper = document.getElementById("paper");
             let grid = document.getElementById("grid");
-            // grid.style.marginTop = margin + "px";
-            // grid.style.width = 595 - margin*2;
-            paper.style.padding = margin + "px";
+            let margin = undefined;
 
-            let margin_out = document.getElementById("out_margin");
+            if (type == 'u'){
+                margin = document.getElementById("ctrl_margin").value;
+                config['margin']['uniform'] = true;
+                config['margin']['margin'] = margin;
+                ['l', 'r', 't', 'b'].forEach(side => delete config["margin"][side]);
+                paper.style.padding = margin + "px";
+            }
+            else{
+                margin = document.getElementById("ctrl_margin_" + type).value;
+
+                config['margin']['uniform'] = false;
+                config['margin'][type] = margin;
+                delete config['margin']['margin'];
+
+                switch (type) {
+                    case 'l':
+                        paper.style.paddingLeft = margin + "px";
+                        break;
+                    case 'r':
+                        paper.style.paddingRight = margin + "px";
+                        break;
+                    case 't':
+                        paper.style.paddingTop = margin + "px";
+                        break;
+                    case 'b':
+                        paper.style.paddingBottom = margin + "px";
+                        break;
+                }
+
+            }
+
+            let margin_out = document.getElementById("out_margin_" + type);
             margin_out.innerText = margin + " px";
+        }
 
-            
+        function ctrlChangeMarginType(){
+            let uniformMarginCheckbox = document.getElementById("ctrl_margin_uniform").checked;
+            document.getElementById("ctrlG_margin_uniform").style.display = uniformMarginCheckbox ? "initial" : "none";
+            document.getElementById("ctrlG_margin_l").style.display = uniformMarginCheckbox ? "none" : "initial";
+            document.getElementById("ctrlG_margin_r").style.display = uniformMarginCheckbox ? "none" : "initial";
+            document.getElementById("ctrlG_margin_t").style.display = uniformMarginCheckbox ? "none" : "initial";
+            document.getElementById("ctrlG_margin_b").style.display = uniformMarginCheckbox ? "none" : "initial";
 
         }
+
+        function changePaperColor(){
+            let paper = document.getElementById("paper");
+            let color = document.getElementById("ctrl_bg_color").value;
+            paper.style.backgroundColor = color;
+            config['bg_color'] = color;
+        }
+
+        function changeGridColor(){
+            // TODO
+            config["grid_color"] = "";
+        }
+
+        function toggleMarginLine(type){
+            // TODO
+            let checkbox = document.getElementById("ctrl_guide_" + type).checked;
+            document.getElementById('grid_svg_guide_' + type).style.display = checkbox ? "initial" : "none";
+            config['guides'][type]['enabled'] = checkbox;
+        }
+
+        function moveMarginLine(type){
+            let guide = document.getElementById("grid_svg_guide_" + type);
+            let width = document.getElementById("ctrl_guide_perc_" + type ).value;
+            guide.x1.baseVal.value = 595 * (width/100);
+            guide.x2.baseVal.value = 595 * (width/100);
+            config["guides"][type]["width"] = 595 * (width/100);
+        }
+
     </script>
         
     </body>
