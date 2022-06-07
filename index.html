@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <link href="style.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="panel">
+            <h1>Hello world!</h1>
+            <span>Margin:</span>
+            <input type="range" min="0" max="100" class="slider" id="ctrl_margin" onchange="changeMargin()">
+            <span id="out_margin"></span>
+        </div>
+        <div id="paper">
+            <div id="grid">
+                <!-- Dot grid -->
+                <svg id="grid_svg" width="595" height="842" currentscale="2">
+                    <pattern id="grid_svg_pat" patternUnits="userSpaceOnUse" x="0" y="100" width="22.47" height="22.47">
+                        <g id="sharp">
+                            <circle class="svgdot" cx="0.5" cy="0.5" r="0.5" stroke="#acacac" style="fill: none;"></circle>
+                        </g>
+                    </pattern>
+                    <rect id="grid_svg-grid" fill="url(#grid_svg_pat)" width="595" height="842"></rect>
+                </svg>
+            </div>
+        </div>
+
+    <script>
+        function changeMargin(){
+            let margin = document.getElementById("ctrl_margin").value;
+            let paper = document.getElementById("paper");
+            let grid = document.getElementById("grid");
+            // grid.style.marginTop = margin + "px";
+            // grid.style.width = 595 - margin*2;
+            paper.style.padding = margin + "px";
+
+            let margin_out = document.getElementById("out_margin");
+            margin_out.innerText = margin + " px";
+
+            
+
+        }
+    </script>
+        
+    </body>
+</html>
