@@ -5,6 +5,7 @@
         :root{
             --accent_color: #C16069;
             --grid_color: #acacac;
+            --pattern_dim: 25;
         }
         </style>
         <script src="jquery-3.6.0.min.js"></script>
@@ -16,8 +17,11 @@
                 <span>Pattern</span>
                 <div class="button pattern_btn" id="line">Line</div>
                 <div class="button pattern_btn" id="graph">Graph</div>
-                <div class="button pattern_btn" id="dot">Dots</div>
+                <div class="button pattern_btn" id="dots">Dots</div>
                 <div class="button pattern_btn" id="cross">Cross</div>
+
+                <span>Pattern dimension:</span>
+                <input type="range" min="0" max="50" class="slider" id="ctrl_pattern_dim" oninput="changePatternDim()">
             </div>
 
             <div class="control_group" style="flex-direction:column; align-items: flex-start;" id="ctrlG_margin">
@@ -84,33 +88,33 @@
             <div id="grid">
                 <!-- Dot grid -->
                 <svg id="grid_svg" width="595" height="842" currentscale="2">
-                    <pattern id="grid_svg_dot" patternUnits="userSpaceOnUse" x="0" y="100" width="22.47" height="22.47">
+                    <pattern id="grid_svg_dots" patternUnits="userSpaceOnUse" x="0" y="0" width="25" height="25">
                         <g id="dot_g">
                             <circle class="svgdot" cx="0.5" cy="0.5" r="1" stroke="var(--grid_color)"></circle>
                         </g>
                     </pattern>
 
-                    <pattern id="grid_svg_cross" patternUnits="userSpaceOnUse" x="0" y="100" width="22.47" height="22.47">
+                    <pattern id="grid_svg_cross" patternUnits="userSpaceOnUse" x="0" y="0" width="25" height="25">
                         <g id="cross_g">
-                            <line x1="0" x2="10" y1="5" y2="5" stroke="var(--grid_color)" stroke-width="2"></line>
-                            <line x1="5" x2="5" y1="0" y2="10" stroke="var(--grid_color)" stroke-width="2"></line>
+                            <line x1="0" x2="6" y1="3" y2="3" stroke="var(--grid_color)" stroke-width="1"></line>
+                            <line x1="3" x2="3" y1="0" y2="6" stroke="var(--grid_color)" stroke-width="1"></line>
                         </g>
                     </pattern>
 
-                    <pattern id="grid_svg_line" patternUnits="userSpaceOnUse" x="0" y="100" width="22.47" height="22.47">
+                    <pattern id="grid_svg_line" patternUnits="userSpaceOnUse" x="0" y="-1" width="25" height="25">
                         <g id="line_g">
                             <line x1="0" x2="100" y1="0" y2="0" stroke="var(--grid_color)" stroke-width="2"></line>
                         </g>
                     </pattern>
 
-                    <pattern id="grid_svg_graph" patternUnits="userSpaceOnUse" x="-1" y="-1" width="17.5" height="17.5">
+                    <pattern id="grid_svg_graph" patternUnits="userSpaceOnUse" x="-1" y="-1" width="25" height="25">
                         <g id="line_g">
-                            <line x1="0" x2="35" y1="0" y2="0" stroke="var(--grid_color)" stroke-width="2"></line>
-                            <line x1="0" x2="0" y1="0" y2="35" stroke="var(--grid_color)" stroke-width="2"></line>
+                            <line x1="0" x2="500" y1="0" y2="0" stroke="var(--grid_color)" stroke-width="2"></line>
+                            <line x1="0" x2="0" y1="0" y2="500" stroke="var(--grid_color)" stroke-width="2"></line>
                         </g>
                     </pattern>
 
-                    <rect id="grid_svg-grid" fill="url(#grid_svg_graph)" width="595" height="842"></rect>
+                    <rect id="grid_svg-grid" fill="url(#grid_svg_dots)" width="595" height="842"></rect>
 
                     <line id="grid_svg_guide_l" x1="100" x2="100" y1="0" y2="842" stroke="var(--accent_color)" style="display:none;"></line>
                     <line id="grid_svg_guide_r" x1="476" x2="476" y1="0" y2="842" stroke="var(--accent_color)" style="display:none;"></line>
@@ -123,7 +127,7 @@
         const a4_height = 842;
 
         let config = {
-            "grid": "dot",
+            "grid": "dots",
             "margin":{
                 "uniform": true,
                 "margin": "50"
@@ -140,9 +144,18 @@
             }
         }
 
+        // Change pattern
         $(".pattern_btn").click(function(){
             $("#grid_svg-grid").attr("fill", "url(#grid_svg_" + this.id + ")");
+            config["grid"] = this.id;
         });
+
+        function changePatternDim(){
+            let dim = $("#ctrl_pattern_dim")[0].value;
+            console.log(config['grid'], dim, $("#grid_svg_" + config['grid']))
+            $("#grid_svg_" + config['grid']).attr("height", dim);
+            $("#grid_svg_" + config['grid']).attr("width", dim);
+        }
 
         function changeMargin(type){
             let paper = document.getElementById("paper");
