@@ -14,27 +14,27 @@
                 
                 <div id="ctrlG_margin_uniform">
                     <span>Margin:</span>
-                    <input type="range" min="0" max="100" class="slider" id="ctrl_margin" onchange="changeMargin('u')">
+                    <input type="range" min="0" max="50" class="slider" id="ctrl_margin" onchange="changeMargin('u')">
                     <span id="out_margin_u"></span>
                 </div>
                 <div id="ctrlG_margin_l" style="display: none;">
                     <span>Left:</span>
-                    <input type="range" min="0" max="100" class="slider" id="ctrl_margin_l" onchange="changeMargin('l')">
+                    <input type="range" min="0" max="50" class="slider" id="ctrl_margin_l" onchange="changeMargin('l')">
                     <span id="out_margin_l"></span>
                 </div>
                 <div id="ctrlG_margin_r" style="display: none;">
                     <span>Right:</span>
-                    <input type="range" min="0" max="100" class="slider" id="ctrl_margin_r" onchange="changeMargin('r')">
+                    <input type="range" min="0" max="50" class="slider" id="ctrl_margin_r" onchange="changeMargin('r')">
                     <span id="out_margin_r"></span>
                 </div>
                 <div id="ctrlG_margin_t" style="display: none;">
                     <span>Top:</span>
-                    <input type="range" min="0" max="100" class="slider" id="ctrl_margin_t" onchange="changeMargin('t')">
+                    <input type="range" min="0" max="50" class="slider" id="ctrl_margin_t" onchange="changeMargin('t')">
                     <span id="out_margin_t"></span>
                 </div>
                 <div id="ctrlG_margin_b" style="display: none;">
                     <span>Bottom:</span>
-                    <input type="range" min="0" max="100" class="slider" id="ctrl_margin_b" onchange="changeMargin('b')">
+                    <input type="range" min="0" max="50" class="slider" id="ctrl_margin_b" onchange="changeMargin('b')">
                     <span id="out_margin_b"></span>
                 </div>
             </div>
@@ -112,39 +112,41 @@
                 config['margin']['margin'] = margin;
                 ['l', 'r', 't', 'b'].forEach(side => delete config["margin"][side]);
 
-                grid.x.baseVal.value = margin;
-                grid.width.baseVal.value = a4_width - margin*2;
+                grid.x.baseVal.value = a4_width * (margin/100);
+                grid.width.baseVal.value = a4_width - grid.x.baseVal.value * 2;
                 
-                grid.y.baseVal.value = margin;
-                grid.height.baseVal.value = a4_height - margin*2;
+                grid.y.baseVal.value = a4_height * (margin/100);
+                grid.height.baseVal.value = a4_height - grid.y.baseVal.value * 2;
 
-                // paper.style.padding = margin + "px";
             }
             else{
                 margin = document.getElementById("ctrl_margin_" + type).value;
 
                 config['margin']['uniform'] = false;
-                config['margin'][type] = margin;
                 delete config['margin']['margin'];
 
                 switch (type) {
                     case 'l':
-                        // paper.style.paddingLeft = margin + "px";
+                        margin = Math.round(a4_width * (margin/100));
                         grid.x.baseVal.value = margin;
+                        grid.width.baseVal.value = a4_width - margin - config['margin']['r'];  // adjust right side
                         break;
                     case 'r':
-                        // paper.style.paddingRight = margin + "px";
-                        grid.width.baseVal.value = a4_width - margin*2;
+                        margin = Math.round(a4_width * (margin/100));
+                        grid.width.baseVal.value = a4_width - grid.x.baseVal.value - margin;
                         break;
                     case 't':
+                        margin = Math.round(a4_height * (margin/100));
                         grid.y.baseVal.value = margin;
-                        // paper.style.paddingTop = margin + "px";
+                        grid.height.baseVal.value = a4_height - margin - config['margin']['b'];  // adjust bottom
                         break;
                     case 'b':
-                        grid.height.baseVal.value = a4_height - margin*2;
-                        //paper.style.paddingBottom = margin + "px";
+                        margin = Math.round(a4_height * (margin/100));
+                        grid.height.baseVal.value = a4_height - grid.y.baseVal.value - margin;
                         break;
                 }
+
+                config['margin'][type] = margin;
 
             }
 
