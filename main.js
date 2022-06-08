@@ -7,11 +7,13 @@ const a4_area = a4_height * a4_width;
 var handlers = {
     "graph": {
         "render": graph_render,
-        "dim": graph_changeDim
+        "dim": graph_changeDim,
+        "export": graph_export
     },
     "dots": {
         "render": dots_render,
-        "dim": default_dim
+        "dim": dots_dim,
+        "export": dots_export
     },
     "cross": {
         "render": cross_render,
@@ -46,6 +48,10 @@ let config = {
         }
     }
 }
+
+// document.onreadystatechange = function(){
+//     changeMargin("u");
+// }
 
 function render(){
     handlers[config.grid.type].render();
@@ -179,4 +185,28 @@ function exportConfig(){
 
 function closeModal(){
     $("#modal-wrap")[0].style.display = "none";
+}
+
+function hexToRgb(hex){
+    // Source: https://convertingcolors.com/blog/article/convert_hex_to_rgb_with_javascript.html
+    var rgbhex = hex.substring(1, hex.length).match(/.{1,2}/g);
+    var rgb = [
+        parseInt(rgbhex[0], 16),
+        parseInt(rgbhex[1], 16),
+        parseInt(rgbhex[2], 16)
+    ]
+    return rgb;
+}
+
+function genPDF(){
+    var pdf = new jsPDF('p', 'px', [a4_width, a4_height]);
+    pdf.setLineWidth(0.1);
+    var grid_color = hexToRgb(config.grid_color);
+    pdf.setDrawColor(grid_color[0], grid_color[1], grid_color[2]);
+    pdf.setFillColor(grid_color[0], grid_color[1], grid_color[2]);
+
+    handlers[config.grid.type].export(pdf);
+
+    var pdfuri = pdf.output('dataurlnewwindow');
+
 }
