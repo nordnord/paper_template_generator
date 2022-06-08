@@ -37,7 +37,7 @@ let config = {
         "t": "50",
         "b": "50",
     },
-    "bg_color": "white",
+    "bg_color": "#ffffff",
     "grid_color": "#acacac",
     "guides":{
         "l": {
@@ -49,9 +49,9 @@ let config = {
     }
 }
 
-// document.onreadystatechange = function(){
-//     changeMargin("u");
-// }
+document.onreadystatechange = function(){
+    changeMargin("u");
+}
 
 function render(){
     handlers[config.grid.type].render();
@@ -201,9 +201,17 @@ function hexToRgb(hex){
 function genPDF(){
     var pdf = new jsPDF('p', 'px', [a4_width, a4_height]);
     pdf.setLineWidth(0.1);
+
+    var bg_color = hexToRgb(config.bg_color);
+    pdf.setFillColor(bg_color[0], bg_color[1], bg_color[2]);
+    pdf.setDrawColor(bg_color[0], bg_color[1], bg_color[2]);
+    pdf.rect(0, 0, a4_width, a4_height, "F");
+
+
     var grid_color = hexToRgb(config.grid_color);
-    pdf.setDrawColor(grid_color[0], grid_color[1], grid_color[2]);
     pdf.setFillColor(grid_color[0], grid_color[1], grid_color[2]);
+    pdf.setDrawColor(grid_color[0], grid_color[1], grid_color[2]);
+
 
     handlers[config.grid.type].export(pdf);
 
