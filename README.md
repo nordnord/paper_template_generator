@@ -1,5 +1,7 @@
 # Paper Template Generator
 
+[Go to generator!](https://nordnord.github.io/paper_template_generator/)
+
 With this template generator you can create your own paper style for your (digital) notebooks.
 It's easy to use and you can use your paper styles in any notebook app that supports PDF import.
 
