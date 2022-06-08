@@ -35,7 +35,6 @@ function line_dim(){
 }
 
 function line_export(pdfdoc){
-    console.log(a4_width - config.margin.r);
     for (
         var y = parseInt(config.margin.t);
         y < a4_height - parseInt(config.margin.b);
