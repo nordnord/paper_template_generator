@@ -17,7 +17,8 @@ var handlers = {
     },
     "cross": {
         "render": cross_render,
-        "dim": default_dim
+        "dim": cross_dim,
+        "export": cross_export
     },
     "line": {
         "render": line_render,
