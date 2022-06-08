@@ -38,7 +38,7 @@
                         <span>Line</span>
                     </div>
                     
-                    <div class="button pattern_btn" id="graph">
+                    <div class="button pattern_btn" id="graph" onclick="genGraph()">
                         <svg width="100%" height="70%" stroke="black">
                                 <line x1="0" x2="150" y1="10" y2="10"></line>
                                 <line x1="0" x2="150" y1="30" y2="30"></line>
@@ -285,11 +285,6 @@
             let uniformMarginCheckbox = document.getElementById("ctrl_margin_uniform").checked;
             document.getElementById("ctrlG_margin").style.display = uniformMarginCheckbox ? "flex" : "none";
             $("div[id^='ctrlG_margin_']").css('display', uniformMarginCheckbox ? "none" : "flex");
-            // document.getElementById("ctrlG_margin_l").style.display = uniformMarginCheckbox ? "none" : "initial";
-            // document.getElementById("ctrlG_margin_r").style.display = uniformMarginCheckbox ? "none" : "initial";
-            // document.getElementById("ctrlG_margin_t").style.display = uniformMarginCheckbox ? "none" : "initial";
-            // document.getElementById("ctrlG_margin_b").style.display = uniformMarginCheckbox ? "none" : "initial";
-
         }
 
         function changePaperColor(){
@@ -333,6 +328,11 @@
 
         function closeModal(){
             $("#modal-wrap")[0].style.display = "none";
+        }
+
+        function genGraph()
+        {
+            
         }
 
     </script>
