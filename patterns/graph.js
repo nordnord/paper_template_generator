@@ -67,3 +67,7 @@ function drawLine(x1, x2, y1, y2, stroke){
     line.setAttribute("stroke", stroke);
     return line;
 }
+
+function graph_export(){
+    
+}

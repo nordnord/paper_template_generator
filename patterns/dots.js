@@ -35,11 +35,8 @@ function dots_render(){
             circle.setAttribute("stroke", "var(--grid_color)");
 
             pattern.appendChild(circle);
-            // pdfdoc.circle(x, y, 1, "F");
         }
     };
-
-    $("#pattern_wrapper").attr("pattern", "dots")
 }
 
 function dots_dim(){
@@ -52,13 +49,12 @@ function dots_export(pdfdoc){
         x < a4_width - parseInt(config.margin.r);
         x += parseInt(config.grid.dim)
     ){
-        console.log(x);
         for (
             var y = parseInt(config.margin.t);
             y < a4_height - parseInt(config.margin.b);
             y += parseInt(config.grid.dim)
         ){
-            pdfdoc.circle(x, y, 1, "F");
+            pdfdoc.circle(x * 0.75, y * 0.75, 1, "F");
         }
     }
 }

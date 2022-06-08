@@ -21,7 +21,8 @@ var handlers = {
     },
     "line": {
         "render": line_render,
-        "dim": default_dim
+        "dim": line_dim,
+        "export": line_export
     }
 };
 
@@ -199,7 +200,12 @@ function hexToRgb(hex){
 }
 
 function genPDF(){
-    var pdf = new jsPDF('p', 'px', [a4_width, a4_height]);
+    var pdf = new jsPDF({
+        'orientation': 'p', 
+        'unit':'px', 
+        'format': "a4",
+        'hotfixes': ['px_scaling']
+    });
     pdf.setLineWidth(0.1);
 
     var bg_color = hexToRgb(config.bg_color);
@@ -212,9 +218,7 @@ function genPDF(){
     pdf.setFillColor(grid_color[0], grid_color[1], grid_color[2]);
     pdf.setDrawColor(grid_color[0], grid_color[1], grid_color[2]);
 
-
     handlers[config.grid.type].export(pdf);
 
-    var pdfuri = pdf.output('dataurlnewwindow');
-
+    pdf.output('dataurlnewwindow');
 }
