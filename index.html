@@ -86,27 +86,27 @@
                 
                 <div class="flex-h" id="ctrlG_margin">
                     <span>Margin:</span>
-                    <input type="range" min="0" max="50" class="slider" id="ctrl_margin" oninput="changeMargin('u')">
+                    <input type="range" min="0" max="297" class="slider" id="ctrl_margin" oninput="changeMargin('u')">
                     <span id="out_margin_u"></span>
                 </div>
                 <div class="flex-h" id="ctrlG_margin_l" style="display: none;">
                     <span>Left:</span>
-                    <input type="range" min="0" max="50" class="slider" id="ctrl_margin_l" oninput="changeMargin('l')">
+                    <input type="range" min="0" max="297" class="slider" id="ctrl_margin_l" oninput="changeMargin('l')">
                     <span id="out_margin_l"></span>
                 </div>
                 <div class="flex-h" id="ctrlG_margin_r" style="display: none;">
                     <span>Right:</span>
-                    <input type="range" min="0" max="50" class="slider" id="ctrl_margin_r" oninput="changeMargin('r')">
+                    <input type="range" min="0" max="297" class="slider" id="ctrl_margin_r" oninput="changeMargin('r')">
                     <span id="out_margin_r"></span>
                 </div>
                 <div class="flex-h" id="ctrlG_margin_t" style="display: none;">
                     <span>Top:</span>
-                    <input type="range" min="0" max="50" class="slider" id="ctrl_margin_t" oninput="changeMargin('t')">
+                    <input type="range" min="0" max="421" class="slider" id="ctrl_margin_t" oninput="changeMargin('t')">
                     <span id="out_margin_t"></span>
                 </div>
                 <div class="flex-h" id="ctrlG_margin_b" style="display: none;">
                     <span>Bottom:</span>
-                    <input type="range" min="0" max="50" class="slider" id="ctrl_margin_b" oninput="changeMargin('b')">
+                    <input type="range" min="0" max="421" class="slider" id="ctrl_margin_b" oninput="changeMargin('b')">
                     <span id="out_margin_b"></span>
                 </div>
             </div>
@@ -168,12 +168,7 @@
                         </g>
                     </pattern>
 
-                    <pattern id="grid_svg_graph" patternUnits="userSpaceOnUse" x="-1" y="-1" width="150" height="150">
-                        <g id="line_g">
-                            <line x1="0" x2="500" y1="0" y2="0" stroke="var(--grid_color)" stroke-width="2"></line>
-                            <line x1="0" x2="0" y1="0" y2="500" stroke="var(--grid_color)" stroke-width="2"></line>
-
-                        </g>
+                    <pattern id="grid_svg_graph" patternUnits="userSpaceOnUse" x="0" y="0" width="595" height="842">
                     </pattern>
 
                     <rect id="grid_svg-grid" fill="url(#grid_svg_dots)" width="595" height="842"></rect>
@@ -196,7 +191,10 @@
             } ,
             "margin":{
                 "uniform": true,
-                "margin": "50"
+                "l": "50",
+                "r": "50",
+                "t": "50",
+                "b": "50",
             },
             "bg_color": "white",
             "grid_color": "#acacac",
@@ -239,10 +237,12 @@
                 // config['margin']['margin'] = margin;
                 ['l', 'r', 't', 'b'].forEach(side => config["margin"][side] = margin);
 
-                grid.x.baseVal.value = a4_width * (margin/100);
+                // grid.x.baseVal.value = a4_width * (margin/100);
+                grid.x.baseVal.value = margin;
                 grid.width.baseVal.value = a4_width - grid.x.baseVal.value * 2;
                 
-                grid.y.baseVal.value = a4_height * (margin/100);
+                // grid.y.baseVal.value = a4_height * (margin/100);
+                grid.y.baseVal.value = margin;
                 grid.height.baseVal.value = a4_height - grid.y.baseVal.value * 2;
 
             }
@@ -253,21 +253,21 @@
 
                 switch (type) {
                     case 'l':
-                        margin = Math.round(a4_width * (margin/100));
+                        // margin = Math.round(a4_width * (margin/100));
                         grid.x.baseVal.value = margin;
                         grid.width.baseVal.value = a4_width - margin - config['margin']['r'];  // adjust right side
                         break;
                     case 'r':
-                        margin = Math.round(a4_width * (margin/100));
+                        // margin = Math.round(a4_width * (margin/100));
                         grid.width.baseVal.value = a4_width - grid.x.baseVal.value - margin;
                         break;
                     case 't':
-                        margin = Math.round(a4_height * (margin/100));
+                        // margin = Math.round(a4_height * (margin/100));
                         grid.y.baseVal.value = margin;
                         grid.height.baseVal.value = a4_height - margin - config['margin']['b'];  // adjust bottom
                         break;
                     case 'b':
-                        margin = Math.round(a4_height * (margin/100));
+                        // margin = Math.round(a4_height * (margin/100));
                         grid.height.baseVal.value = a4_height - grid.y.baseVal.value - margin;
                         break;
                 }
@@ -329,9 +329,61 @@
             $("#modal-wrap")[0].style.display = "none";
         }
 
+        function drawLine(x1, x2, y1, y2, stroke){
+            let svgns = "http://www.w3.org/2000/svg";
+            var line = document.createElementNS(svgns, "line");
+            line.setAttribute("x1", x1);
+            line.setAttribute("x2", x2);
+            line.setAttribute("y1", y1);
+            line.setAttribute("y2", y2);
+            line.setAttribute("stroke", stroke);
+            return line;
+        }
+
         function genGraph()
         {
+            let grid = $("#grid_svg_graph")[0];
+            grid.innerHTML = "";
+            grid.setAttribute("x", config.margin.l);
+            grid.setAttribute("y", config.margin.t);
+            grid.setAttribute("height", a4_height - config.margin.t - config.margin.b);
+            grid.setAttribute("width", a4_width - config.margin.l - config.margin.r);
 
+            for (
+                var i = 0; 
+                i < (a4_width - parseInt(config.margin.r) - parseInt(config.margin.l)); 
+                i += parseInt(config.grid.dim)
+            ){
+                var vline = drawLine(i, i, 0, a4_height - config.margin.t - config.margin.b, "var(--grid_color)")
+                grid.appendChild(vline);
+            }
+            grid.appendChild(
+                drawLine(
+                    a4_width - config.margin.l - config.margin.r,
+                    a4_width - config.margin.l - config.margin.r,
+                    0,
+                    a4_height - config.margin.t - config.margin.b,
+                    "var(--grid_color)"
+                )
+            );
+
+            for(
+                var i = 0;
+                i < (a4_height - parseInt(config.margin.t) - parseInt(config.margin.b));
+                i += parseInt(config.grid.dim)
+            ){
+                var hline = drawLine(0, a4_width - config.margin.l - config.margin.r, i, i, "var(--grid_color)")
+                grid.appendChild(hline);
+            }
+            grid.appendChild(
+                drawLine(
+                    0,
+                    a4_width - config.margin.l - config.margin.r,
+                    a4_height - config.margin.t - config.margin.b,
+                    a4_height - config.margin.t - config.margin.b,
+                    "var(--grid_color)"
+                )
+            );
         }
 
     </script>
