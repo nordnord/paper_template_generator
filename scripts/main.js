@@ -74,8 +74,6 @@ $(".pattern_btn").click(function(){
 function default_dim(){
     let dim = $("#ctrl_pattern_dim")[0].value;
     config['grid']['dim'] = dim;
-    // dim = Math.sqrt((a4_area-4) / dim);
-    // console.log(dim);
     $("#pattern_" + config['grid']['type']).attr("height", dim);
     $("#pattern_" + config['grid']['type']).attr("width", dim);
 }
@@ -232,7 +230,6 @@ function genPDF(){
     var accent_color = hexToRgb(config.aux_color);
     pdf.setDrawColor(accent_color[0], accent_color[1], accent_color[2]);
     pdf.setLineWidth(1);
-    console.log(accent_color);
     
     if (config.guides.l.enabled){
         pdf.line(
