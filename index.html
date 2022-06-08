@@ -236,8 +236,8 @@
             if (type == 'u'){
                 margin = document.getElementById("ctrl_margin").value;
                 config['margin']['uniform'] = true;
-                config['margin']['margin'] = margin;
-                ['l', 'r', 't', 'b'].forEach(side => delete config["margin"][side]);
+                // config['margin']['margin'] = margin;
+                ['l', 'r', 't', 'b'].forEach(side => config["margin"][side] = margin);
 
                 grid.x.baseVal.value = a4_width * (margin/100);
                 grid.width.baseVal.value = a4_width - grid.x.baseVal.value * 2;
@@ -250,7 +250,6 @@
                 margin = document.getElementById("ctrl_margin_" + type).value;
 
                 config['margin']['uniform'] = false;
-                delete config['margin']['margin'];
 
                 switch (type) {
                     case 'l':
@@ -332,7 +331,7 @@
 
         function genGraph()
         {
-            
+
         }
 
     </script>
