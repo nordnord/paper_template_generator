@@ -1,4 +1,0 @@
-<pattern id="pattern_cross" patternUnits="userSpaceOnUse" x="10" y="10" width="25" height="25">
-    <line x1="0" x2="6" y1="3" y2="3" stroke="var(--grid_color)" stroke-width="1"></line>
-    <line x1="3" x2="3" y1="0" y2="6" stroke="var(--grid_color)" stroke-width="1"></line>
-</pattern>
