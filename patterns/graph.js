@@ -14,6 +14,7 @@ function graph_render()
 
     pattern_wrapper.appendChild(grid);
 
+    // Vertical lines
     for (
         var i = 0; 
         i < (a4_width - parseInt(config.margin.r) - parseInt(config.margin.l)); 
@@ -22,6 +23,7 @@ function graph_render()
         var vline = drawLine(i, i, 0, a4_height - config.margin.t - config.margin.b, "var(--grid_color)")
         grid.appendChild(vline);
     }
+    // Vertical trailing line
     grid.appendChild(
         drawLine(
             a4_width - config.margin.l - config.margin.r,
@@ -32,6 +34,7 @@ function graph_render()
         )
     );
 
+    // Horizontal line
     for(
         var i = 0;
         i < (a4_height - parseInt(config.margin.t) - parseInt(config.margin.b));
@@ -40,6 +43,7 @@ function graph_render()
         var hline = drawLine(0, a4_width - config.margin.l - config.margin.r, i, i, "var(--grid_color)")
         grid.appendChild(hline);
     }
+    // Horizontal trailing line
     grid.appendChild(
         drawLine(
             0,
@@ -68,6 +72,49 @@ function drawLine(x1, x2, y1, y2, stroke){
     return line;
 }
 
-function graph_export(){
-    
+function graph_export(pdfdoc){
+    // Vertical lines
+    for (
+        var i = parseInt(config.margin.l); 
+        i < (a4_width - parseInt(config.margin.r)); 
+        i += parseInt(config.grid.dim)
+    ){
+        pdfdoc.line(
+            i * 0.75, 
+            config.margin.t * 0.75, 
+            i * 0.75, 
+            (a4_height - config.margin.b)*0.75,
+            "S"
+        );
+    }
+
+    // Vertical trailing line
+    pdfdoc.line(
+        (a4_width - config.margin.r) * 0.75,
+        config.margin.t * 0.75,
+        (a4_width - config.margin.r)*0.75,
+        (a4_height - config.margin.b) * 0.75,
+    );
+
+    // Horizontal line
+    for(
+        var i = parseInt(config.margin.t);
+        i < (a4_height - parseInt(config.margin.b));
+        i += parseInt(config.grid.dim)
+    ){
+        pdfdoc.line(
+            parseInt(config.margin.t) * 0.75,
+            i*0.75, 
+            (a4_width - config.margin.r)*0.75,
+            i * 0.75, 
+            'S');
+    }
+    // Horizontal trailing line
+    pdfdoc.line(
+        config.margin.l * 0.75,
+        (a4_height - config.margin.b) * 0.75,
+        (a4_width - config.margin.r)*0.75,
+        (a4_height - config.margin.b)*0.75,
+        'S'
+    );
 }
