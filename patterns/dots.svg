@@ -1,0 +1,5 @@
+<pattern id="pattern_dots" patternUnits="userSpaceOnUse" x="0" y="0" width="10" height="10">
+    <g id="dot_g">
+        <circle class="svgdot" cx="5" cy="5" r="1" stroke="var(--grid_color)"></circle>
+    </g>
+</pattern>

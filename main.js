@@ -1,3 +1,4 @@
+const svgns = "http://www.w3.org/2000/svg";
 
 const a4_width = 595;
 const a4_height = 842;
@@ -7,6 +8,18 @@ var handlers = {
     "graph": {
         "render": graph_render,
         "dim": graph_changeDim
+    },
+    "dots": {
+        "render": dots_render,
+        "dim": default_dim
+    },
+    "cross": {
+        "render": cross_render,
+        "dim": default_dim
+    },
+    "line": {
+        "render": line_render,
+        "dim": default_dim
     }
 };
 
@@ -36,11 +49,12 @@ let config = {
 
 function render(){
     handlers[config.grid.type].render();
+    $("#grid_svg-grid").attr("fill", `url(#pattern_${config.grid.type})`);
 }
 
 // Change pattern
 $(".pattern_btn").click(function(){
-    $("#grid_svg-grid").attr("fill", "url(#grid_svg_" + this.id + ")");
+    //$("#grid_svg-grid").attr("fill", "url(#grid_svg_" + this.id + ")");
     config["grid"]['type'] = this.id;
     $(".pattern_btn").removeClass("active");
     $(this).addClass("active");
@@ -48,11 +62,19 @@ $(".pattern_btn").click(function(){
     render();
 });
 
+function default_dim(){
+    let dim = $("#ctrl_pattern_dim")[0].value;
+    config['grid']['dim'] = dim;
+    // dim = Math.sqrt((a4_area-4) / dim);
+    // console.log(dim);
+    $("#pattern_" + config['grid']['type']).attr("height", dim);
+    $("#pattern_" + config['grid']['type']).attr("width", dim);
+}
+
 function changePatternDim(){
     let dim = $("#ctrl_pattern_dim")[0].value;
     config.grid.dim = dim;
     handlers[config.grid.type].dim();
-    render();
 }
 
 function changeMargin(type){
@@ -157,15 +179,4 @@ function exportConfig(){
 
 function closeModal(){
     $("#modal-wrap")[0].style.display = "none";
-}
-
-function drawLine(x1, x2, y1, y2, stroke){
-    let svgns = "http://www.w3.org/2000/svg";
-    var line = document.createElementNS(svgns, "line");
-    line.setAttribute("x1", x1);
-    line.setAttribute("x2", x2);
-    line.setAttribute("y1", y1);
-    line.setAttribute("y2", y2);
-    line.setAttribute("stroke", stroke);
-    return line;
 }

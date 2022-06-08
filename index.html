@@ -150,28 +150,7 @@
             <div id="grid">
                 <!-- Dot grid -->
                 <svg id="grid_svg" width="595" height="842" currentscale="2">
-                    <pattern id="grid_svg_dots" patternUnits="userSpaceOnUse" x="0" y="0" width="10" height="10">
-                        <g id="dot_g">
-                            <circle class="svgdot" cx="5" cy="5" r="1" stroke="var(--grid_color)"></circle>
-                        </g>
-                    </pattern>
-
-                    <pattern id="grid_svg_cross" patternUnits="userSpaceOnUse" x="10" y="10" width="25" height="25">
-                        <g id="cross_g">
-                            <line x1="0" x2="6" y1="3" y2="3" stroke="var(--grid_color)" stroke-width="1"></line>
-                            <line x1="3" x2="3" y1="0" y2="6" stroke="var(--grid_color)" stroke-width="1"></line>
-                        </g>
-                    </pattern>
-
-                    <pattern id="grid_svg_line" patternUnits="userSpaceOnUse" x="0" y="-1" width="25" height="25">
-                        <g id="line_g">
-                            <line x1="0" x2="100" y1="0" y2="0" stroke="var(--grid_color)" stroke-width="2"></line>
-                        </g>
-                    </pattern>
-
-                    <pattern id="grid_svg_graph" patternUnits="userSpaceOnUse" x="0" y="0" width="595" height="842">
-                    </pattern>
-
+                    <g id="pattern_wrapper"></g>
                     <rect id="grid_svg-grid" fill="url(#grid_svg_dots)" width="595" height="842"></rect>
 
                     <line id="grid_svg_guide_l" x1="100" x2="100" y1="0" y2="842" stroke="var(--accent_color)" style="display:none;"></line>
@@ -181,6 +160,9 @@
         </div>
 
     <script src="patterns/graph.js"></script>
+    <script src="patterns/cross.js"></script>
+    <script src="patterns/dots.js"></script>
+    <script src="patterns/line.js"></script>
     <script src="main.js"></script>
 
     <div id="modal-wrap">
