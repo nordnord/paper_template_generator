@@ -41,6 +41,7 @@ let config = {
     },
     "bg_color": "#ffffff",
     "grid_color": "#acacac",
+    "aux_color": "#C16069",
     "guides":{
         "l": {
             "enabled": false
@@ -104,6 +105,8 @@ function changeMargin(type){
         grid.y.baseVal.value = margin;
         grid.height.baseVal.value = a4_height - grid.y.baseVal.value * 2;
 
+        moveMarginLine('l');
+        moveMarginLine('r');
     }
     else{
         margin = document.getElementById("ctrl_margin_" + type).value;
@@ -132,12 +135,14 @@ function changeMargin(type){
         }
 
         config['margin'][type] = margin;
+        moveMarginLine(type);
 
     }
 
     let margin_out = document.getElementById("out_margin_" + type);
     margin_out.innerText = margin + " px";
     render();
+    
 }
 
 function ctrlChangeMarginType(){
@@ -170,13 +175,16 @@ function toggleMarginLine(type){
     let checkbox = document.getElementById("ctrl_guide_" + type).checked;
     document.getElementById('grid_svg_guide_' + type).style.display = checkbox ? "initial" : "none";
     config['guides'][type]['enabled'] = checkbox;
+    moveMarginLine(type);
 }
 
 function moveMarginLine(type){
     let guide = document.getElementById("grid_svg_guide_" + type);
     let width = document.getElementById("ctrl_guide_perc_" + type ).value;
     guide.x1.baseVal.value = a4_width * (width/100);
+    guide.y1.baseVal.value = config.margin.t;
     guide.x2.baseVal.value = a4_width * (width/100);
+    guide.y2.baseVal.value = a4_height - config.margin.b;
     config["guides"][type]["width"] = a4_width * (width/100);
 }
 
@@ -221,5 +229,30 @@ function genPDF(){
 
     handlers[config.grid.type].export(pdf);
 
-    pdf.output('dataurlnewwindow');
+    var accent_color = hexToRgb(config.aux_color);
+    pdf.setDrawColor(accent_color[0], accent_color[1], accent_color[2]);
+    pdf.setLineWidth(1);
+    console.log(accent_color);
+    
+    if (config.guides.l.enabled){
+        pdf.line(
+            config.guides.l.width * 0.75,
+            config.margin.t * 0.75,
+            config.guides.l.width * 0.75,
+            (a4_height - config.margin.b)*0.75,
+            'S'
+        );
+    }
+        
+    if (config.guides.r.enabled){
+        pdf.line(
+            config.guides.r.width * 0.75,
+            config.margin.t * 0.75,
+            config.guides.r.width * 0.75,
+            (a4_height - config.margin.b)*0.75,
+            'S'
+        );
+    }
+
+        pdf.output('dataurlnewwindow');
 }
