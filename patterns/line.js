@@ -5,5 +5,5 @@ function line_render(){
     $("#pattern_wrapper").load("patterns/line.svg");
     $("#pattern_wrapper").attr("pattern", "line")
 
-    dots_dim();
+    default_dim();
 }
