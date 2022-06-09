@@ -100,6 +100,11 @@ body{
     grid-template-columns:auto auto auto;
     justify-items: start;
     gap: 0.5rem;
+    width: 100%;
+}
+
+.grid-3 > span.ctrl_out{
+    justify-self: right;
 }
 
 #modal-wrap{

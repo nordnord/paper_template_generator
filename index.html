@@ -88,31 +88,28 @@
                     <input type="checkbox" id="ctrl_margin_uniform" checked="checked" onchange="ctrlChangeMarginType()">
                     <span>Uniform margin</span>
                 </div>
-                <div class="grid-3">
+                <div class="flex-h" id="ctrlG_margin">
+                    <span>Margin:</span>
+                    <input type="range" min="0" max="297" value="10" class="slider" id="ctrl_margin" oninput="changeMargin('u')">
+                    <span id="out_margin_u"></span>
+                </div>
 
-                    <div class="grid-3" id="ctrlG_margin">
-                        <span>Margin:</span>
-                        <input type="range" min="0" max="297" value="10" class="slider" id="ctrl_margin" oninput="changeMargin('u')">
-                        <span id="out_margin_u"></span>
-                    </div>
+                <div class="grid-3" id="ctrlG_margin_custom" style="display: none;">
+                    <span>Left:</span>
+                    <input type="range" min="0" max="297" class="slider" id="ctrl_margin_l" oninput="changeMargin('l')">
+                    <span class="ctrl_out" id="out_margin_l"></span>
 
-                    <div class="grid-3" id="ctrlG_margin_custom" style="display: none;">
-                        <span>Left:</span>
-                        <input type="range" min="0" max="297" class="slider" id="ctrl_margin_l" oninput="changeMargin('l')">
-                        <span id="out_margin_l"></span>
+                    <span>Right:</span>
+                    <input type="range" min="0" max="297" class="slider" id="ctrl_margin_r" oninput="changeMargin('r')">
+                    <span class="ctrl_out" id="out_margin_r"></span>
 
-                        <span>Right:</span>
-                        <input type="range" min="0" max="297" class="slider" id="ctrl_margin_r" oninput="changeMargin('r')">
-                        <span id="out_margin_r"></span>
+                    <span>Top:</span>
+                    <input type="range" min="0" max="421" class="slider" id="ctrl_margin_t" oninput="changeMargin('t')">
+                    <span class="ctrl_out" id="out_margin_t"></span>
 
-                        <span>Top:</span>
-                        <input type="range" min="0" max="421" class="slider" id="ctrl_margin_t" oninput="changeMargin('t')">
-                        <span id="out_margin_t"></span>
-
-                        <span>Bottom:</span>
-                        <input type="range" min="0" max="421" class="slider" id="ctrl_margin_b" oninput="changeMargin('b')">
-                        <span id="out_margin_b"></span>
-                    </div>
+                    <span>Bottom:</span>
+                    <input type="range" min="0" max="421" class="slider" id="ctrl_margin_b" oninput="changeMargin('b')">
+                    <span class="ctrl_out" id="out_margin_b"></span>
                 </div>
             </div>
 
@@ -140,7 +137,7 @@
                     <input type="checkbox" id="ctrl_guide_l" onchange="toggleMarginLine('l')">
                     <span>Left:</span>
                     <input type="range" min="0" max="50" id="ctrl_guide_perc_l" oninput="moveMarginLine('l')">
-                    
+
                     <input type="checkbox" id="ctrl_guide_r" onchange="toggleMarginLine('r')">
                     <span>Right:</span>
                     <input type="range" min="50" max="100" id="ctrl_guide_perc_r" oninput="moveMarginLine('r')">

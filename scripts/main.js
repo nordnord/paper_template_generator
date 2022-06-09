@@ -178,6 +178,9 @@ function toggleMarginLine(type){
 }
 
 function moveMarginLine(type){
+    // Vertical guides aren't supported yet
+    if (type == 't' || type == 'b') return;
+
     let guide = document.getElementById("grid_svg_guide_" + type);
     let width = document.getElementById("ctrl_guide_perc_" + type ).value;
     guide.x1.baseVal.value = a4_width * (width/100);
