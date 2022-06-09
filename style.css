@@ -51,7 +51,7 @@ body{
     align-items: center;
     flex-grow: 0;
     justify-content: space-between;
-    gap: 0.33rem;
+    gap: 0.5rem;
 }
 
 .cg_header{
@@ -95,13 +95,20 @@ body{
     width: 100%;
 }
 
+.grid-3{
+    display: grid;
+    grid-template-columns:auto auto auto;
+    justify-items: start;
+    gap: 0.5rem;
+}
+
 #modal-wrap{
     display: none;
     position: fixed;
     top: 0;
     left: 0;
     height: 100vh;
-    width: 100vw;;
+    width: 100vw;
     background-color: rgba(0,0,0,0.5);
 }
 

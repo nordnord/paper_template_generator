@@ -146,7 +146,8 @@ function changeMargin(type){
 function ctrlChangeMarginType(){
     let uniformMarginCheckbox = document.getElementById("ctrl_margin_uniform").checked;
     document.getElementById("ctrlG_margin").style.display = uniformMarginCheckbox ? "flex" : "none";
-    $("div[id^='ctrlG_margin_']").css('display', uniformMarginCheckbox ? "none" : "flex");
+    // $("div[id^='ctrlG_margin_']").css('display', uniformMarginCheckbox ? "none" : "flex");
+    $("#ctrlG_margin_custom").css('display', uniformMarginCheckbox ? "none" : "grid");
 }
 
 function changePaperColor(){
