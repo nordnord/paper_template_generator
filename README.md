@@ -9,10 +9,12 @@ Please notice, it's still WIP, so if you miss some functionality, there is a cha
 
 ## Some examples
 
-<img src="repo_images/crosses_right.png" width="25%">
-<img src="repo_images/dots_line.png" width="25%">
-<img src="repo_images/lines_left.png" width="25%">
-<img src="repo_images/dots_dark.png" width="25%">
+<p float="left">
+  <img src="repo_images/crosses_right.png" width="22%">
+  <img src="repo_images/dots_line.png" width="22%">
+  <img src="repo_images/lines_left.png" width="22%">
+  <img src="repo_images/dots_dark.png" width="22%">
+</p>
 
 ## Roadmap
 
