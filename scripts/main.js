@@ -30,7 +30,8 @@ var handlers = {
 let config = {
     "grid":{
         "type": "dots",
-        "dim": 25
+        "dim": 25,
+        "thickness": 1
     } ,
     "margin":{
         "uniform": true,
@@ -85,6 +86,13 @@ function changePatternDim(){
     config.grid.dim = dim;
     handlers[config.grid.type].dim();
     $("#out_spacing")[0].innerText = dim + " px";
+}
+
+function changePatternThickness(){
+    let thickness = parseInt($("#ctrl_pattern_thickness")[0].value)
+    config.grid.thickness = thickness;
+    $("#out_thickness")[0].innerText = thickness + " px";
+    render();
 }
 
 function changeMargin(type){
