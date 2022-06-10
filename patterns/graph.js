@@ -69,10 +69,13 @@ function drawLine(x1, x2, y1, y2, stroke){
     line.setAttribute("y1", y1);
     line.setAttribute("y2", y2);
     line.setAttribute("stroke", stroke);
+    line.setAttribute("stroke-width", config.grid.thickness);
     return line;
 }
 
 function graph_export(pdfdoc){
+    pdfdoc.setLineWidth(config.grid.thickness * 0.75);
+
     // Vertical lines
     for (
         var i = parseInt(config.margin.l); 
