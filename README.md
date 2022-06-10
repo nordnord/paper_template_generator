@@ -20,7 +20,7 @@ Please notice, it's still WIP, so if you miss some functionality, there is a cha
 
 - [ ] More options
   - [ ] Guide line width
-  - [ ] Line/Grid stroke width
+  - [x] Line/Grid stroke width
   - [ ] Major/minor coloring
 - [ ] More templates
   - [ ] Hexagonal
