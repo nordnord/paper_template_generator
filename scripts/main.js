@@ -182,7 +182,6 @@ function changeAccentColor(){
 }
 
 function toggleMarginLine(type){
-    // TODO
     let checkbox = document.getElementById("ctrl_guide_" + type).checked;
     document.getElementById('grid_svg_guide_' + type).style.display = checkbox ? "initial" : "none";
     config['guides'][type]['enabled'] = checkbox;
