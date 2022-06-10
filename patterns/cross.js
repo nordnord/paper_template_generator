@@ -25,9 +25,18 @@ function cross_render(){
             y < a4_height - parseInt(config.margin.b);
             y += parseInt(config.grid.dim)
         ){
-            var vline = drawLine(x, x, y-5, y+5, "var(--grid_color)");
+            var vline = drawLine(
+                x, x, 
+                y-5-config.grid.thickness, 
+                y+5+config.grid.thickness, 
+            "var(--grid_color)");
             pattern.appendChild(vline);
-            var hline = drawLine(x-5, x+5, y, y, "var(--grid_color)");
+
+            var hline = drawLine(
+                x-5-config.grid.thickness, 
+                x+5+config.grid.thickness, 
+                y, y, 
+                "var(--grid_color)");
             pattern.appendChild(hline);
         }
     }
@@ -38,6 +47,7 @@ function cross_dim(){
 }
 
 function cross_export(pdfdoc){
+    pdfdoc.setLineWidth(config.grid.thickness * 0.75);
     for (
         var x = parseInt(config.margin.l); 
         x < a4_width - parseInt(config.margin.r);
@@ -48,8 +58,19 @@ function cross_export(pdfdoc){
             y < a4_height - parseInt(config.margin.b);
             y += parseInt(config.grid.dim)
         ){
-            pdfdoc.line(x*0.75, (y-5)*0.75, x*0.75, (y+5)*0.75, 'S');
-            pdfdoc.line((x-5)*0.75, y*0.75, (x+5)*0.75, y*0.75, 'S');
+            pdfdoc.line(
+                x * 0.75, 
+                (y - 5 - config.grid.thickness)*0.75, 
+                x * 0.75, 
+                (y + 5 + config.grid.thickness) * 0.75, 
+                'S');
+
+            pdfdoc.line(
+                (x - 5 - config.grid.thickness) * 0.75, 
+                y * 0.75, 
+                (x + 5 + config.grid.thickness) * 0.75, 
+                y * 0.75, 
+                'S');
         }
     }
 }
