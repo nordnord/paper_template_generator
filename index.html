@@ -75,10 +75,16 @@
                     </div>
                 </div>
                 
+                <div class="flex-h">
+                    <span>Pattern spacing:</span>
+                    <input type="range" min="5" max="100" value="10" class="slider" id="ctrl_pattern_dim" oninput="changePatternDim()">
+                    <span id="out_spacing"></span>
+                </div>
 
                 <div class="flex-h">
-                    <span>Pattern dimension:</span>
-                    <input type="range" min="5" max="100" value="10" class="slider" id="ctrl_pattern_dim" oninput="changePatternDim()">
+                    <span>Grid thickness:</span>
+                    <input type="range" min="1" max="25" value="1" class="slider" id="ctrl_pattern_thickness" oninput="changePatternThickness()">
+                    <span id="out_thickness"></span>
                 </div>
             </div>
 

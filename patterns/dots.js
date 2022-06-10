@@ -31,8 +31,10 @@ function dots_render(){
             var circle = document.createElementNS(svgns, "circle");
             circle.setAttribute("cx", x);
             circle.setAttribute("cy", y);
-            circle.setAttribute("r", 1);
+            circle.setAttribute("r", config.grid.thickness);
             circle.setAttribute("stroke", "var(--grid_color)");
+            circle.setAttribute("fill", "var(--grid_color)");
+
 
             pattern.appendChild(circle);
         }
@@ -54,7 +56,7 @@ function dots_export(pdfdoc){
             y < a4_height - parseInt(config.margin.b);
             y += parseInt(config.grid.dim)
         ){
-            pdfdoc.circle(x * 0.75, y * 0.75, 1, "F");
+            pdfdoc.circle(x * 0.75, y * 0.75, config.grid.thickness * 0.75, "F");
         }
     }
 }

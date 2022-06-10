@@ -30,7 +30,8 @@ var handlers = {
 let config = {
     "grid":{
         "type": "dots",
-        "dim": 25
+        "dim": 25,
+        "thickness": 1
     } ,
     "margin":{
         "uniform": true,
@@ -53,7 +54,10 @@ let config = {
 }
 
 document.onreadystatechange = function(){
+    // Initial value setting
     changeMargin("u");
+    changePatternDim();
+    changePatternThickness();
 }
 
 function render(){
@@ -63,11 +67,11 @@ function render(){
 
 // Change pattern
 $(".pattern_btn").click(function(){
-    //$("#grid_svg-grid").attr("fill", "url(#grid_svg_" + this.id + ")");
     config["grid"]['type'] = this.id;
     $(".pattern_btn").removeClass("active");
     $(this).addClass("active");
     $(":root")[0].style.setProperty("--button_color", "white");
+
     render();
 });
 
@@ -82,6 +86,14 @@ function changePatternDim(){
     let dim = $("#ctrl_pattern_dim")[0].value;
     config.grid.dim = dim;
     handlers[config.grid.type].dim();
+    $("#out_spacing")[0].innerText = dim + " px";
+}
+
+function changePatternThickness(){
+    let thickness = parseInt($("#ctrl_pattern_thickness")[0].value)
+    config.grid.thickness = thickness;
+    $("#out_thickness")[0].innerText = thickness + " px";
+    render();
 }
 
 function changeMargin(type){
