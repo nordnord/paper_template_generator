@@ -57,6 +57,7 @@ document.onreadystatechange = function(){
     // Initial value setting
     changeMargin("u");
     changePatternDim();
+    changePatternThickness();
 }
 
 function render(){
