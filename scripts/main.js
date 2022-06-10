@@ -254,6 +254,5 @@ function genPDF(){
             'S'
         );
     }
-
-        pdf.output('dataurlnewwindow');
+    window.open(pdf.output("bloburl", { filename: "my.pdf" }));
 }
