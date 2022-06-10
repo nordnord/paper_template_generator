@@ -53,7 +53,9 @@ let config = {
 }
 
 document.onreadystatechange = function(){
+    // Initial value setting
     changeMargin("u");
+    changePatternDim();
 }
 
 function render(){
@@ -63,11 +65,11 @@ function render(){
 
 // Change pattern
 $(".pattern_btn").click(function(){
-    //$("#grid_svg-grid").attr("fill", "url(#grid_svg_" + this.id + ")");
     config["grid"]['type'] = this.id;
     $(".pattern_btn").removeClass("active");
     $(this).addClass("active");
     $(":root")[0].style.setProperty("--button_color", "white");
+
     render();
 });
 
@@ -82,6 +84,7 @@ function changePatternDim(){
     let dim = $("#ctrl_pattern_dim")[0].value;
     config.grid.dim = dim;
     handlers[config.grid.type].dim();
+    $("#out_spacing")[0].innerText = dim + " px";
 }
 
 function changeMargin(type){
