@@ -24,6 +24,7 @@ function line_render(){
         line.setAttribute("y1", y);
         line.setAttribute("y2", y);
         line.setAttribute("stroke", "var(--grid_color)");
+        line.setAttribute("stroke-width", config.grid.thickness);
 
         pattern.appendChild(line);
         
@@ -40,6 +41,7 @@ function line_export(pdfdoc){
         y < a4_height - parseInt(config.margin.b);
         y += parseInt(config.grid.dim)
     ){
+        pdfdoc.setLineWidth(config.grid.thickness * 0.75);
         pdfdoc.line(
             config.margin.l * 0.75, y*0.75, 
             (a4_width - parseInt(config.margin.r)) * 0.75, y * 0.75, 
