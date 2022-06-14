@@ -14,7 +14,6 @@ body{
 }
 
 #paper{
-    border: 1px solid #acacac;
     border-radius: 2px;
     
     height: fit-content;
@@ -23,7 +22,7 @@ body{
     position: sticky;
     top: 1.5rem;
 
-    box-shadow: 0 0 5px 5px rgba(200, 200, 200, 0.1);
+    box-shadow: 0 0 5px 5px rgba(200, 200, 200, 0.25);
 
 }
 
@@ -44,9 +43,8 @@ body{
     display: flex;
     flex-direction: column;
 
-    border: 1px solid #dedede;
-    border-radius: 2px;
-    box-shadow: 0 0 5px 5px rgba(200, 200, 200, 0.1);
+    border-radius: 5px;
+    box-shadow: 0 0 5px 1px rgba(200, 200, 200, 0.75);
 
     padding: 0.66rem;
     align-items: center;
@@ -66,7 +64,7 @@ body{
     width: 75px;
     height: 75px;
     border: 1px solid #acacac;
-    border-radius: 2px;
+    border-radius: 5px;
     padding: 0.25rem;
 
     box-shadow: 0 0 5px 5px rgba(200, 200, 200, 0.1);
