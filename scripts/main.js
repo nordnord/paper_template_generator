@@ -76,7 +76,6 @@ document.onreadystatechange = function(){
 }
 
 function render(){
-    console.log("Rendering ", config.grid.type)
     handlers[config.grid.type].render();
     $("#grid_svg-grid").attr("fill", `url(#pattern_${config.grid.type})`);
 }
@@ -220,7 +219,6 @@ function moveMarginLine(type){
 
 function changePaperSize(){
     let size = $("#ctrl_paper_size")[0].value;
-    // console.log(size);
     config.format = size;
     let svg_grid_holder = $("#grid_svg")[0];
     svg_grid_holder.width.baseVal.value = sizes[config.format][0];
