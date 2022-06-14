@@ -9,27 +9,27 @@ function graph_render()
     grid.setAttribute("patternUnits", "userSpaceOnUse");
     grid.setAttribute("x", config.margin.l);
     grid.setAttribute("y", config.margin.t);
-    grid.setAttribute("height", a4_height - config.margin.t - config.margin.b);
-    grid.setAttribute("width", a4_width - config.margin.l - config.margin.r);
+    grid.setAttribute("height", sizes[config.format][1] - config.margin.t - config.margin.b);
+    grid.setAttribute("width", sizes[config.format][0] - config.margin.l - config.margin.r);
 
     pattern_wrapper.appendChild(grid);
 
     // Vertical lines
     for (
         var i = 0; 
-        i < (a4_width - parseInt(config.margin.r) - parseInt(config.margin.l)); 
+        i < (sizes[config.format][0] - parseInt(config.margin.r) - parseInt(config.margin.l)); 
         i += parseInt(config.grid.dim)
     ){
-        var vline = drawLine(i, i, 0, a4_height - config.margin.t - config.margin.b, "var(--grid_color)")
+        var vline = drawLine(i, i, 0, sizes[config.format][1] - config.margin.t - config.margin.b, "var(--grid_color)")
         grid.appendChild(vline);
     }
     // Vertical trailing line
     grid.appendChild(
         drawLine(
-            a4_width - config.margin.l - config.margin.r,
-            a4_width - config.margin.l - config.margin.r,
+            sizes[config.format][0] - config.margin.l - config.margin.r,
+            sizes[config.format][0] - config.margin.l - config.margin.r,
             0,
-            a4_height - config.margin.t - config.margin.b,
+            sizes[config.format][1] - config.margin.t - config.margin.b,
             "var(--grid_color)"
         )
     );
@@ -37,19 +37,19 @@ function graph_render()
     // Horizontal line
     for(
         var i = 0;
-        i < (a4_height - parseInt(config.margin.t) - parseInt(config.margin.b));
+        i < (sizes[config.format][1] - parseInt(config.margin.t) - parseInt(config.margin.b));
         i += parseInt(config.grid.dim)
     ){
-        var hline = drawLine(0, a4_width - config.margin.l - config.margin.r, i, i, "var(--grid_color)")
+        var hline = drawLine(0, sizes[config.format][0] - config.margin.l - config.margin.r, i, i, "var(--grid_color)")
         grid.appendChild(hline);
     }
     // Horizontal trailing line
     grid.appendChild(
         drawLine(
             0,
-            a4_width - config.margin.l - config.margin.r,
-            a4_height - config.margin.t - config.margin.b,
-            a4_height - config.margin.t - config.margin.b,
+            sizes[config.format][0] - config.margin.l - config.margin.r,
+            sizes[config.format][1] - config.margin.t - config.margin.b,
+            sizes[config.format][1] - config.margin.t - config.margin.b,
             "var(--grid_color)"
         )
     );
@@ -79,45 +79,45 @@ function graph_export(pdfdoc){
     // Vertical lines
     for (
         var i = parseInt(config.margin.l); 
-        i < (a4_width - parseInt(config.margin.r)); 
+        i < (sizes[config.format][0] - parseInt(config.margin.r)); 
         i += parseInt(config.grid.dim)
     ){
         pdfdoc.line(
             i * 0.75, 
             config.margin.t * 0.75, 
             i * 0.75, 
-            (a4_height - config.margin.b)*0.75,
+            (sizes[config.format][1] - config.margin.b)*0.75,
             "S"
         );
     }
 
     // Vertical trailing line
     pdfdoc.line(
-        (a4_width - config.margin.r) * 0.75,
+        (sizes[config.format][0] - config.margin.r) * 0.75,
         config.margin.t * 0.75,
-        (a4_width - config.margin.r)*0.75,
-        (a4_height - config.margin.b) * 0.75,
+        (sizes[config.format][0] - config.margin.r)*0.75,
+        (sizes[config.format][1] - config.margin.b) * 0.75,
     );
 
     // Horizontal line
     for(
         var i = parseInt(config.margin.t);
-        i < (a4_height - parseInt(config.margin.b));
+        i < (sizes[config.format][1] - parseInt(config.margin.b));
         i += parseInt(config.grid.dim)
     ){
         pdfdoc.line(
             parseInt(config.margin.t) * 0.75,
             i*0.75, 
-            (a4_width - config.margin.r)*0.75,
+            (sizes[config.format][0] - config.margin.r)*0.75,
             i * 0.75, 
             'S');
     }
     // Horizontal trailing line
     pdfdoc.line(
         config.margin.l * 0.75,
-        (a4_height - config.margin.b) * 0.75,
-        (a4_width - config.margin.r)*0.75,
-        (a4_height - config.margin.b)*0.75,
+        (sizes[config.format][1] - config.margin.b) * 0.75,
+        (sizes[config.format][0] - config.margin.r)*0.75,
+        (sizes[config.format][1] - config.margin.b)*0.75,
         'S'
     );
 }

@@ -8,8 +8,8 @@ function cross_render(){
     pattern.setAttribute("id", "pattern_cross");
     pattern.setAttribute("x", 0);
     pattern.setAttribute("y", 0);
-    pattern.setAttribute("width", a4_width);
-    pattern.setAttribute("height", a4_height);
+    pattern.setAttribute("width", sizes[config.format][0]);
+    pattern.setAttribute("height", sizes[config.format][1]);
     pattern.setAttribute("patternUnits", "userSpaceOnUse");
 
     pattern_wrapper.appendChild(pattern);
@@ -17,12 +17,12 @@ function cross_render(){
     // NOTE: -5 just to prevent preview clipping
     for (
         var x = parseInt(config.margin.l)-5; 
-        x < a4_width - parseInt(config.margin.r);
+        x < sizes[config.format][0] - parseInt(config.margin.r);
         x += parseInt(config.grid.dim)
     ){
         for (
             var y = parseInt(config.margin.t)-5;
-            y < a4_height - parseInt(config.margin.b);
+            y < sizes[config.format][1] - parseInt(config.margin.b);
             y += parseInt(config.grid.dim)
         ){
             var vline = drawLine(
@@ -50,12 +50,12 @@ function cross_export(pdfdoc){
     pdfdoc.setLineWidth(config.grid.thickness * 0.75);
     for (
         var x = parseInt(config.margin.l); 
-        x < a4_width - parseInt(config.margin.r);
+        x < sizes[config.format][0] - parseInt(config.margin.r);
         x += parseInt(config.grid.dim)
     ){
         for (
             var y = parseInt(config.margin.t);
-            y < a4_height - parseInt(config.margin.b);
+            y < sizes[config.format][1] - parseInt(config.margin.b);
             y += parseInt(config.grid.dim)
         ){
             pdfdoc.line(

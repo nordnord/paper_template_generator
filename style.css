@@ -15,10 +15,8 @@ body{
 #paper{
     border: 1px solid #acacac;
     border-radius: 2px;
-    width: 595px;
-    height: 842px;
-
-    /* margin: auto; */
+    
+    height: fit-content;
 
     box-shadow: 0 0 5px 5px rgba(200, 200, 200, 0.1);
     overflow: hidden;
