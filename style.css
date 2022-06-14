@@ -9,7 +9,8 @@ body{
     grid-template-columns: 1fr 1.5fr;
     column-gap: 2rem;
     padding: 1rem;
-    overflow: hidden;
+    overflow-x: hidden;
+    position: relative;
 }
 
 #paper{
@@ -17,11 +18,13 @@ body{
     border-radius: 2px;
     
     height: fit-content;
+    overflow-x: hidden;
+    justify-self: start;
+    position: sticky;
+    top: 1.5rem;
 
     box-shadow: 0 0 5px 5px rgba(200, 200, 200, 0.1);
-    overflow: hidden;
 
-    justify-self: start;
 }
 
 #grid{
