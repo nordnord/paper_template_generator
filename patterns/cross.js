@@ -29,14 +29,14 @@ function cross_render(){
                 x, x, 
                 y-5-config.grid.thickness, 
                 y+5+config.grid.thickness, 
-            "var(--grid_color)");
+                config.grid_color);
             pattern.appendChild(vline);
 
             var hline = drawLine(
                 x-5-config.grid.thickness, 
                 x+5+config.grid.thickness, 
                 y, y, 
-                "var(--grid_color)");
+                config.grid_color);
             pattern.appendChild(hline);
         }
     }

@@ -23,7 +23,7 @@ function line_render(){
         line.setAttribute("x2", sizes[config.format][0] - config.margin.r);
         line.setAttribute("y1", y);
         line.setAttribute("y2", y);
-        line.setAttribute("stroke", "var(--grid_color)");
+        line.setAttribute("stroke", config.grid_color);
         line.setAttribute("stroke-width", config.grid.thickness);
 
         pattern.appendChild(line);

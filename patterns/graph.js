@@ -20,7 +20,7 @@ function graph_render()
         i < (sizes[config.format][0] - parseInt(config.margin.r) - parseInt(config.margin.l)); 
         i += parseInt(config.grid.dim)
     ){
-        var vline = drawLine(i, i, 0, sizes[config.format][1] - config.margin.t - config.margin.b, "var(--grid_color)")
+        var vline = drawLine(i, i, 0, sizes[config.format][1] - config.margin.t - config.margin.b, config.grid_color)
         grid.appendChild(vline);
     }
     // Vertical trailing line
@@ -30,7 +30,7 @@ function graph_render()
             sizes[config.format][0] - config.margin.l - config.margin.r,
             0,
             sizes[config.format][1] - config.margin.t - config.margin.b,
-            "var(--grid_color)"
+            config.grid_color
         )
     );
 
@@ -40,7 +40,7 @@ function graph_render()
         i < (sizes[config.format][1] - parseInt(config.margin.t) - parseInt(config.margin.b));
         i += parseInt(config.grid.dim)
     ){
-        var hline = drawLine(0, sizes[config.format][0] - config.margin.l - config.margin.r, i, i, "var(--grid_color)")
+        var hline = drawLine(0, sizes[config.format][0] - config.margin.l - config.margin.r, i, i, config.grid_color)
         grid.appendChild(hline);
     }
     // Horizontal trailing line
@@ -50,7 +50,7 @@ function graph_render()
             sizes[config.format][0] - config.margin.l - config.margin.r,
             sizes[config.format][1] - config.margin.t - config.margin.b,
             sizes[config.format][1] - config.margin.t - config.margin.b,
-            "var(--grid_color)"
+            config.grid_color
         )
     );
 
