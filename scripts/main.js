@@ -1,8 +1,22 @@
 const svgns = "http://www.w3.org/2000/svg";
 
-const a4_width = 595;
-const a4_height = 842;
-const a4_area = a4_height * a4_width;
+// const sizes[config.format][0] = 595;
+// const sizes[config.format][1] = 842;
+// const a4_area = sizes[config.format][1] * sizes[config.format][0];
+
+// NOTE: format: [width, height]
+const sizes = {
+    "a2": [1190, 1683],
+    "a3": [841, 1190],
+    "a4": [595, 842],
+    "a5": [419, 595],
+    "a6": [297, 419],
+    "letter": [612, 792],
+    "legal": [612, 1008],
+    "tabloid": [792, 1224],
+    "junior-legal": [360, 576],
+    "government-letter": [576, 756]
+}
 
 var handlers = {
     "graph": {
@@ -28,6 +42,7 @@ var handlers = {
 };
 
 let config = {
+    "format": "a4",
     "grid":{
         "type": "dots",
         "dim": 25,
@@ -107,13 +122,13 @@ function changeMargin(type){
         // config['margin']['margin'] = margin;
         ['l', 'r', 't', 'b'].forEach(side => config["margin"][side] = margin);
 
-        // grid.x.baseVal.value = a4_width * (margin/100);
+        // grid.x.baseVal.value = sizes[config.format][0] * (margin/100);
         grid.x.baseVal.value = margin;
-        grid.width.baseVal.value = a4_width - grid.x.baseVal.value * 2;
+        grid.width.baseVal.value = sizes[config.format][0] - grid.x.baseVal.value * 2;
         
-        // grid.y.baseVal.value = a4_height * (margin/100);
+        // grid.y.baseVal.value = sizes[config.format][1] * (margin/100);
         grid.y.baseVal.value = margin;
-        grid.height.baseVal.value = a4_height - grid.y.baseVal.value * 2;
+        grid.height.baseVal.value = sizes[config.format][1] - grid.y.baseVal.value * 2;
 
         moveMarginLine('l');
         moveMarginLine('r');
@@ -125,22 +140,22 @@ function changeMargin(type){
 
         switch (type) {
             case 'l':
-                // margin = Math.round(a4_width * (margin/100));
+                // margin = Math.round(sizes[config.format][0] * (margin/100));
                 grid.x.baseVal.value = margin;
-                grid.width.baseVal.value = a4_width - margin - config['margin']['r'];  // adjust right side
+                grid.width.baseVal.value = sizes[config.format][0] - margin - config['margin']['r'];  // adjust right side
                 break;
             case 'r':
-                // margin = Math.round(a4_width * (margin/100));
-                grid.width.baseVal.value = a4_width - grid.x.baseVal.value - margin;
+                // margin = Math.round(sizes[config.format][0] * (margin/100));
+                grid.width.baseVal.value = sizes[config.format][0] - grid.x.baseVal.value - margin;
                 break;
             case 't':
-                // margin = Math.round(a4_height * (margin/100));
+                // margin = Math.round(sizes[config.format][1] * (margin/100));
                 grid.y.baseVal.value = margin;
-                grid.height.baseVal.value = a4_height - margin - config['margin']['b'];  // adjust bottom
+                grid.height.baseVal.value = sizes[config.format][1] - margin - config['margin']['b'];  // adjust bottom
                 break;
             case 'b':
-                // margin = Math.round(a4_height * (margin/100));
-                grid.height.baseVal.value = a4_height - grid.y.baseVal.value - margin;
+                // margin = Math.round(sizes[config.format][1] * (margin/100));
+                grid.height.baseVal.value = sizes[config.format][1] - grid.y.baseVal.value - margin;
                 break;
         }
 
@@ -194,11 +209,24 @@ function moveMarginLine(type){
 
     let guide = document.getElementById("grid_svg_guide_" + type);
     let width = document.getElementById("ctrl_guide_perc_" + type ).value;
-    guide.x1.baseVal.value = a4_width * (width/100);
+    guide.x1.baseVal.value = sizes[config.format][0] * (width/100);
     guide.y1.baseVal.value = config.margin.t;
-    guide.x2.baseVal.value = a4_width * (width/100);
-    guide.y2.baseVal.value = a4_height - config.margin.b;
-    config["guides"][type]["width"] = a4_width * (width/100);
+    guide.x2.baseVal.value = sizes[config.format][0] * (width/100);
+    guide.y2.baseVal.value = sizes[config.format][1] - config.margin.b;
+    config["guides"][type]["width"] = sizes[config.format][0] * (width/100);
+}
+
+function changePaperSize(){
+    let size = $("#ctrl_paper_size")[0].value;
+    config.format = size;
+    let svg_grid_holder = $("#grid_svg")[0];
+    svg_grid_holder.width.baseVal.value = sizes[config.format][0];
+    svg_grid_holder.height.baseVal.value = sizes[config.format][1];
+
+    let svg_grid = $("#grid_svg-grid")[0];
+    svg_grid.width.baseVal.value = sizes[config.format][0];
+    svg_grid.height.baseVal.value = sizes[config.format][1];
+    render();
 }
 
 function exportConfig(){
@@ -208,6 +236,11 @@ function exportConfig(){
 
 function closeModal(){
     $("#modal-wrap")[0].style.display = "none";
+}
+
+function removeChildren(element){
+    while (element.firstChild)
+        element.removeChild(element.firstChild);
 }
 
 function hexToRgb(hex){
@@ -225,7 +258,7 @@ function genPDF(){
     var pdf = new jsPDF({
         'orientation': 'p', 
         'unit':'px', 
-        'format': "a4",
+        'format': config.format,
         'hotfixes': ['px_scaling']
     });
     pdf.setLineWidth(0.1);
@@ -233,7 +266,7 @@ function genPDF(){
     var bg_color = hexToRgb(config.bg_color);
     pdf.setFillColor(bg_color[0], bg_color[1], bg_color[2]);
     pdf.setDrawColor(bg_color[0], bg_color[1], bg_color[2]);
-    pdf.rect(0, 0, a4_width, a4_height, "F");
+    pdf.rect(0, 0, sizes[config.format][0], sizes[config.format][1], "F");
 
 
     var grid_color = hexToRgb(config.grid_color);
@@ -251,7 +284,7 @@ function genPDF(){
             config.guides.l.width * 0.75,
             config.margin.t * 0.75,
             config.guides.l.width * 0.75,
-            (a4_height - config.margin.b)*0.75,
+            (sizes[config.format][1] - config.margin.b)*0.75,
             'S'
         );
     }
@@ -261,7 +294,7 @@ function genPDF(){
             config.guides.r.width * 0.75,
             config.margin.t * 0.75,
             config.guides.r.width * 0.75,
-            (a4_height - config.margin.b)*0.75,
+            (sizes[config.format][1] - config.margin.b)*0.75,
             'S'
         );
     }
