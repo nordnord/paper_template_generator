@@ -4,8 +4,6 @@
         <style>
         :root{
             --accent_color: #C16069;
-            --grid_color: #acacac;
-            --pattern_dim: 25;
             --button_color: black;
         }
         </style>
@@ -32,6 +30,26 @@
                     </div>
                 </div>
             </div>
+
+            <div class="control_group">
+                <span class="cg_header">Paper size</span>
+                <select name="ctrl_paper_size" id="ctrl_paper_size" onchange="changePaperSize()">
+                    <option value="">-- A-Formats</option>
+                    <option value="a2">A2</option>
+                    <option value="a3">A3</option>
+                    <option value="a4" selected="">A4</option>
+                    <option value="a5">A5</option>
+                    <option value="a6">A6</option>
+
+                    <option value="">-- US-Formats</option>
+                    <option value="letter">Letter</option>
+                    <option value="legal">Legal</option>
+                    <option value="tabloid">Tabloid</option>
+                    <option value="junior-legal">Junior Legal</option>
+                    <option value="government-letter">Government Letter</option>
+                </select>
+            </div>
+
             <div class="control_group">
                 <span class="cg_header">Pattern</span>
                 <div class="flex-h">
