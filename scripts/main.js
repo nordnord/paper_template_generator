@@ -41,7 +41,7 @@ var handlers = {
     }
 };
 
-let config = {
+var config = {
     "format": "a4",
     "grid":{
         "type": "dots",
@@ -119,14 +119,11 @@ function changeMargin(type){
     if (type == 'u'){
         margin = document.getElementById("ctrl_margin").value;
         config['margin']['uniform'] = true;
-        // config['margin']['margin'] = margin;
         ['l', 'r', 't', 'b'].forEach(side => config["margin"][side] = margin);
 
-        // grid.x.baseVal.value = sizes[config.format][0] * (margin/100);
         grid.x.baseVal.value = margin;
         grid.width.baseVal.value = sizes[config.format][0] - grid.x.baseVal.value * 2;
         
-        // grid.y.baseVal.value = sizes[config.format][1] * (margin/100);
         grid.y.baseVal.value = margin;
         grid.height.baseVal.value = sizes[config.format][1] - grid.y.baseVal.value * 2;
 
@@ -140,21 +137,17 @@ function changeMargin(type){
 
         switch (type) {
             case 'l':
-                // margin = Math.round(sizes[config.format][0] * (margin/100));
                 grid.x.baseVal.value = margin;
                 grid.width.baseVal.value = sizes[config.format][0] - margin - config['margin']['r'];  // adjust right side
                 break;
             case 'r':
-                // margin = Math.round(sizes[config.format][0] * (margin/100));
                 grid.width.baseVal.value = sizes[config.format][0] - grid.x.baseVal.value - margin;
                 break;
             case 't':
-                // margin = Math.round(sizes[config.format][1] * (margin/100));
                 grid.y.baseVal.value = margin;
                 grid.height.baseVal.value = sizes[config.format][1] - margin - config['margin']['b'];  // adjust bottom
                 break;
             case 'b':
-                // margin = Math.round(sizes[config.format][1] * (margin/100));
                 grid.height.baseVal.value = sizes[config.format][1] - grid.y.baseVal.value - margin;
                 break;
         }
@@ -173,7 +166,6 @@ function changeMargin(type){
 function ctrlChangeMarginType(){
     let uniformMarginCheckbox = document.getElementById("ctrl_margin_uniform").checked;
     document.getElementById("ctrlG_margin").style.display = uniformMarginCheckbox ? "flex" : "none";
-    // $("div[id^='ctrlG_margin_']").css('display', uniformMarginCheckbox ? "none" : "flex");
     $("#ctrlG_margin_custom").css('display', uniformMarginCheckbox ? "none" : "grid");
 }
 
@@ -186,8 +178,9 @@ function changePaperColor(){
 
 function changeGridColor(){
     let color = document.getElementById("ctrl_grid_color").value;
-    document.querySelector(":root").style.setProperty('--grid_color', color);
+    // document.querySelector(":root").style.setProperty('--grid_color', color);
     config["grid_color"] = color;
+    render();
 }
 
 function changeAccentColor(){
